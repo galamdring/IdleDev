@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <data>
+        <variable name="workerManager" type="com.galamdring.idledev.WidgetsManager"/>
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/masterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/master_label"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/masterCountTV"
+        app:layout_constraintStart_toStartOf="@+id/noviceLabel"
+        app:layout_constraintTop_toTopOf="@+id/masterCountTV"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/masterSpeedTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/novice_speed"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/masterBuySingle"
+        app:layout_constraintEnd_toEndOf="@+id/apprenticeSpeedTV"
+        app:layout_constraintStart_toStartOf="@+id/apprenticeSpeedTV"
+        app:layout_constraintTop_toTopOf="@+id/masterBuySingle" />
+
+    <TextView
+        android:id="@+id/masterCountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{workerManager.masterCountString}"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/masterSpeedTV"
+        app:layout_constraintEnd_toEndOf="@+id/apprenticeCountTV"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/apprenticeCountTV"
+        app:layout_constraintTop_toTopOf="@+id/masterSpeedTV"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/masterBuySingle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/novice_buy_single_button"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/masterBuySet"
+        app:layout_constraintStart_toEndOf="@+id/masterSpeedTV"
+        app:layout_constraintTop_toBottomOf="@+id/apprenticeBuySingle" />
+
+    <Button
+        android:id="@+id/masterBuySet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/novice_buy_set_button"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/masterBuySingle"
+        app:layout_constraintEnd_toEndOf="@+id/apprenticeBuySet"
+        app:layout_constraintStart_toStartOf="@+id/apprenticeBuySet"
+        app:layout_constraintTop_toTopOf="@+id/masterBuySingle"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/apprenticeBuySingle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/novice_buy_single_button"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/apprenticeBuySet"
+        app:layout_constraintStart_toEndOf="@+id/apprenticeSpeedTV"
+        app:layout_constraintTop_toBottomOf="@+id/noviceBuySingle" />
+
+    <Button
+        android:id="@+id/noviceBuySet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/novice_buy_set_button"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/noviceBuySingle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/noviceBuySingle"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/amateurBuySet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/novice_buy_set_button"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/amateurBuySingle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/amateurBuySingle"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/apprenticeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/apprentice_label"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/apprenticeCountTV"
+        app:layout_constraintStart_toStartOf="@+id/noviceLabel"
+        app:layout_constraintTop_toTopOf="@+id/apprenticeCountTV" />
+
+    <TextView
+        android:id="@+id/apprenticeSpeedTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/novice_speed"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/apprenticeBuySingle"
+        app:layout_constraintEnd_toEndOf="@+id/noviceSpeedTV"
+        app:layout_constraintStart_toStartOf="@+id/noviceSpeedTV"
+        app:layout_constraintTop_toTopOf="@+id/apprenticeBuySingle" />
+
+    <TextView
+        android:id="@+id/apprenticeCountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{workerManager.apprenticeCountString}"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/apprenticeSpeedTV"
+        app:layout_constraintEnd_toEndOf="@+id/noviceCountTV"
+        app:layout_constraintStart_toStartOf="@+id/noviceCountTV"
+        app:layout_constraintTop_toTopOf="@+id/apprenticeSpeedTV" />
+
+    <Button
+        android:id="@+id/apprenticeBuySet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/novice_buy_set_button"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/apprenticeBuySingle"
+        app:layout_constraintEnd_toEndOf="@+id/noviceBuySet"
+        app:layout_constraintStart_toStartOf="@+id/noviceBuySet"
+        app:layout_constraintTop_toTopOf="@+id/apprenticeBuySingle" />
+
+    <TextView
+        android:id="@+id/widgetsProducedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/widgets_produced_label"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/widgetsProducedCountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/zero"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toEndOf="@+id/widgetsProducedLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/widgetProduceButton"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/produce"
+        android:textColor="@color/colorAccent"
+        app:iconTint="@color/colorPrimaryDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/widgetsProducedLabel" />
+
+    <TextView
+        android:id="@+id/workersLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/workers_label"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/widgetProduceButton" />
+
+    <TextView
+        android:id="@+id/noviceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/novice_label"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/noviceCountTV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/noviceCountTV" />
+
+    <TextView
+        android:id="@+id/amateurLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/amateur_label"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/workersLabel" />
+
+    <TextView
+        android:id="@+id/noviceCountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="@{workerManager.noviceCountString}"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/noviceSpeedTV"
+        app:layout_constraintEnd_toEndOf="@+id/amateurCountTV"
+        app:layout_constraintStart_toEndOf="@+id/noviceLabel"
+        app:layout_constraintTop_toTopOf="@+id/noviceSpeedTV" />
+
+    <TextView
+        android:id="@+id/amateurCountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@{workerManager.amateurCountString}"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintStart_toEndOf="@+id/amateurLabel"
+        app:layout_constraintTop_toTopOf="@+id/amateurLabel" />
+
+    <TextView
+        android:id="@+id/noviceSpeedTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/novice_speed"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/noviceBuySingle"
+        app:layout_constraintStart_toEndOf="@+id/noviceCountTV"
+        app:layout_constraintTop_toTopOf="@+id/noviceBuySingle" />
+
+    <TextView
+        android:id="@+id/amateurSpeedTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/novice_speed"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/amateurCountTV"
+        app:layout_constraintStart_toEndOf="@+id/amateurCountTV"
+        app:layout_constraintTop_toTopOf="@+id/amateurCountTV" />
+
+    <Button
+        android:id="@+id/noviceBuySingle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/novice_buy_single_button"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/noviceBuySet"
+        app:layout_constraintStart_toEndOf="@+id/noviceSpeedTV"
+        app:layout_constraintTop_toBottomOf="@+id/amateurBuySingle" />
+
+    <Button
+        android:id="@+id/amateurBuySingle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/novice_buy_single_button"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/amateurSpeedTV"
+        app:layout_constraintEnd_toStartOf="@+id/noviceBuySet"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toEndOf="@+id/amateurSpeedTV"
+        app:layout_constraintTop_toTopOf="@+id/amateurSpeedTV" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

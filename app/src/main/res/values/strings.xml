@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">IdleDev</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="produce">Produce</string>
+    <string name="widgets_produced_label">Widgets Produced</string>
+    <string name="novice_speed">%s/s</string>
+    <string name="novice_buy_single_button">Buy 1 \n%s</string>
+    <string name="novice_buy_set_button">Buy %1$d \n%2$s</string>
+    <string name="apprentice_label">Apprentice</string>
+    <string name="zero">0</string>
+    <string name="workers_label">Workers</string>
+    <string name="novice_label">Novice</string>
+    <string name="master_label">Master</string>
+    <string name="amateur_label">Amateur</string>
+</resources>
