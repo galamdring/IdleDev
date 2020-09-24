@@ -1,7 +1,9 @@
 package com.galamdring.idledev.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WorkerDAO{
@@ -21,6 +23,15 @@ interface WorkerDAO{
     @Query("SELECT * FROM workers where type like :type")
     fun getWorker(type: String): Worker
 
+    @Query("SELECT * FROM workers where type like :type")
+    fun getWorkerLiveData(type: String): LiveData<Worker>
+
     @Query("Select * from workers Order by workerId Desc")
     fun getAllWorkers(): LiveData<List<Worker>>
+
+    @Query("SELECT EXISTS(SELECT * FROM workers where type like :type)")
+    fun hasType(type: String): Boolean
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(workers: List<Worker>)
 }

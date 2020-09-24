@@ -15,6 +15,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     kotlinOptions {
@@ -43,13 +44,38 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    def room_version = "2.2.5" // check latest version from docs
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Support libraries
+    implementation "androidx.fragment:fragment:1.2.5"
+
+
+    // Room and Lifecycle dependencies
     implementation "androidx.room:room-runtime:$room_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+
+    // Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    // Navigation
+    implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
+
+    // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    testImplementation "com.google.truth:truth:1.0.1"
 
 }

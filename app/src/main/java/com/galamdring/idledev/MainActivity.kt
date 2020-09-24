@@ -2,6 +2,7 @@ package com.galamdring.idledev
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -62,8 +63,8 @@ class MainActivity : AppCompatActivity() {
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = NUM_PAGES
 
-        override fun createFragment(position: Int) : Fragment {
-            return when(position){
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
                 0 -> return WidgetsFragment()
                 1 -> return DodadsFragment()
                 else -> Fragment()
@@ -71,4 +72,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    fun Button.DisableIf(condition: Boolean) {
+        if (condition) {
+            WidgetHelpers.markButtonDisable(this, context)
+        } else {
+            WidgetHelpers.markButtonEnabled(this, context)
+        }
+
+    }
 }

@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Worker::class], version = 1, exportSchema = false)
+@Database(entities = [Worker::class, Widget::class], version = 2, exportSchema = false)
 abstract class WorkerDatabase : RoomDatabase() {
 
     abstract val workerDao: WorkerDAO
+    abstract val widgetDao: WidgetDao
 
     companion object {
 

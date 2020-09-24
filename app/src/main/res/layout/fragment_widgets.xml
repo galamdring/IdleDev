@@ -5,301 +5,521 @@
     tools:context=".MainActivity">
 
     <data>
-        <variable name="workerManager" type="com.galamdring.idledev.WidgetsManager"/>
+
+        <variable
+            name="viewModel"
+            type="com.galamdring.idledev.WidgetViewModel" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/frameLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/masterLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/master_label"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/masterCountTV"
-        app:layout_constraintStart_toStartOf="@+id/noviceLabel"
-        app:layout_constraintTop_toTopOf="@+id/masterCountTV"
-        app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/masterSpeedTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/novice_speed"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/masterBuySingle"
-        app:layout_constraintEnd_toEndOf="@+id/apprenticeSpeedTV"
-        app:layout_constraintStart_toStartOf="@+id/apprenticeSpeedTV"
-        app:layout_constraintTop_toTopOf="@+id/masterBuySingle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/masterCountTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{workerManager.masterCountString}"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/masterSpeedTV"
-        app:layout_constraintEnd_toEndOf="@+id/apprenticeCountTV"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/apprenticeCountTV"
-        app:layout_constraintTop_toTopOf="@+id/masterSpeedTV"
-        app:layout_constraintVertical_bias="1.0" />
+        <!-- Widgets -->
 
-    <Button
-        android:id="@+id/masterBuySingle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/novice_buy_single_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/masterBuySet"
-        app:layout_constraintStart_toEndOf="@+id/masterSpeedTV"
-        app:layout_constraintTop_toBottomOf="@+id/apprenticeBuySingle" />
+        <TextView
+            android:id="@+id/widgetsProducedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/widgets_produced_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/masterBuySet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/novice_buy_set_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/masterBuySingle"
-        app:layout_constraintEnd_toEndOf="@+id/apprenticeBuySet"
-        app:layout_constraintStart_toStartOf="@+id/apprenticeBuySet"
-        app:layout_constraintTop_toTopOf="@+id/masterBuySingle"
-        app:layout_constraintVertical_bias="1.0" />
+        <TextView
+            android:id="@+id/widgetsProducedCountTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.widgetCountString}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/widgetsProducedLabel"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/apprenticeBuySingle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/novice_buy_single_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/apprenticeBuySet"
-        app:layout_constraintStart_toEndOf="@+id/apprenticeSpeedTV"
-        app:layout_constraintTop_toBottomOf="@+id/noviceBuySingle" />
+        <Button
+            android:id="@+id/widgetProduceButton"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/produce"
+            android:textColor="@color/colorAccent"
+            app:iconTint="@color/colorPrimaryDark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/widgetsProducedLabel"
+            android:onClick="@{viewModel.clickListener}" />
 
-    <Button
-        android:id="@+id/noviceBuySet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/novice_buy_set_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/noviceBuySingle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/noviceBuySingle"
-        app:layout_constraintVertical_bias="1.0" />
+        <!-- Workers -->
 
-    <Button
-        android:id="@+id/amateurBuySet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/novice_buy_set_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/amateurBuySingle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/amateurBuySingle"
-        app:layout_constraintVertical_bias="1.0" />
+        <TextView
+            android:id="@+id/workersLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/workers_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/widgetProduceButton" />
+        <!-- Amateur -->
 
-    <TextView
-        android:id="@+id/apprenticeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/apprentice_label"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/apprenticeCountTV"
-        app:layout_constraintStart_toStartOf="@+id/noviceLabel"
-        app:layout_constraintTop_toTopOf="@+id/apprenticeCountTV" />
+        <TextView
+            android:id="@+id/amateurLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/amateur_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/workersLabel" />
 
-    <TextView
-        android:id="@+id/apprenticeSpeedTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/novice_speed"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/apprenticeBuySingle"
-        app:layout_constraintEnd_toEndOf="@+id/noviceSpeedTV"
-        app:layout_constraintStart_toStartOf="@+id/noviceSpeedTV"
-        app:layout_constraintTop_toTopOf="@+id/apprenticeBuySingle" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/amateurSpeedCountLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/amateurBuySingle"
+            app:layout_constraintStart_toEndOf="@id/amateurLabel"
+            app:layout_constraintTop_toTopOf="@id/amateurLabel"
+            app:layout_constraintBottom_toBottomOf="@id/amateurLabel">
 
-    <TextView
-        android:id="@+id/apprenticeCountTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{workerManager.apprenticeCountString}"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/apprenticeSpeedTV"
-        app:layout_constraintEnd_toEndOf="@+id/noviceCountTV"
-        app:layout_constraintStart_toStartOf="@+id/noviceCountTV"
-        app:layout_constraintTop_toTopOf="@+id/apprenticeSpeedTV" />
+            <TextView
+                android:id="@+id/amateurCountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.amateurCountString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/amateurSpeedTV"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/layout_example_count" />
 
-    <Button
-        android:id="@+id/apprenticeBuySet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/novice_buy_set_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/apprenticeBuySingle"
-        app:layout_constraintEnd_toEndOf="@+id/noviceBuySet"
-        app:layout_constraintStart_toStartOf="@+id/noviceBuySet"
-        app:layout_constraintTop_toTopOf="@+id/apprenticeBuySingle" />
+            <TextView
+                android:id="@+id/amateurSpeedTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewModel.amateurTotalSpeedString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintBottom_toBottomOf="@+id/amateurCountTV"
+                app:layout_constraintStart_toEndOf="@+id/amateurCountTV"
+                app:layout_constraintTop_toTopOf="@+id/amateurCountTV"
+                tools:text="@string/layout_example_speed" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/widgetsProducedLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/widgets_produced_label"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/amateurBuySingle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:enabled="@{viewModel.amateurBuySingleButtonEnabled}"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.amateurBuySingleButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/amateurSpeedCountLayout"
+            app:layout_constraintEnd_toStartOf="@+id/amateurBuySet"
+            app:layout_constraintTop_toTopOf="@+id/amateurSpeedCountLayout" />
 
-    <TextView
-        android:id="@+id/widgetsProducedCountTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/zero"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toEndOf="@+id/widgetsProducedLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/amateurBuySet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@{viewModel.amateurBuySetButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/amateurBuySingle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/amateurBuySingle"
+            android:onClick="@{viewModel.clickListener}" />
 
-    <Button
-        android:id="@+id/widgetProduceButton"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/produce"
-        android:textColor="@color/colorAccent"
-        app:iconTint="@color/colorPrimaryDark"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/widgetsProducedLabel" />
+        <!--  Novice -->
 
-    <TextView
-        android:id="@+id/workersLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/workers_label"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/widgetProduceButton" />
+        <TextView
+            android:id="@+id/noviceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/novice_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintBottom_toBottomOf="@+id/noviceCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/noviceCountSpeedLayout" />
 
-    <TextView
-        android:id="@+id/noviceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/novice_label"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/noviceCountTV"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/noviceCountTV" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/noviceCountSpeedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/amateurSpeedCountLayout"
+            app:layout_constraintStart_toStartOf="@+id/amateurSpeedCountLayout"
+            app:layout_constraintTop_toTopOf="@+id/noviceBuySingle"
+            app:layout_constraintBottom_toBottomOf="@id/noviceBuySingle">
 
-    <TextView
-        android:id="@+id/amateurLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/amateur_label"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workersLabel" />
+            <TextView
+                android:id="@+id/noviceCountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.noviceCountString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/noviceSpeedTV"
+                app:layout_constraintTop_toTopOf="@+id/noviceSpeedTV"
+                tools:text="@string/layout_example_count" />
 
-    <TextView
-        android:id="@+id/noviceCountTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:text="@{workerManager.noviceCountString}"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/noviceSpeedTV"
-        app:layout_constraintEnd_toEndOf="@+id/amateurCountTV"
-        app:layout_constraintStart_toEndOf="@+id/noviceLabel"
-        app:layout_constraintTop_toTopOf="@+id/noviceSpeedTV" />
+            <TextView
+                android:id="@+id/noviceSpeedTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewModel.noviceTotalSpeedString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintStart_toEndOf="@+id/noviceCountTV"
+                app:layout_constraintTop_toTopOf="@id/noviceCountTV"
+                tools:text="@string/layout_example_speed" />
 
-    <TextView
-        android:id="@+id/amateurCountTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="@{workerManager.amateurCountString}"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintStart_toEndOf="@+id/amateurLabel"
-        app:layout_constraintTop_toTopOf="@+id/amateurLabel" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/noviceSpeedTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/novice_speed"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/noviceBuySingle"
-        app:layout_constraintStart_toEndOf="@+id/noviceCountTV"
-        app:layout_constraintTop_toTopOf="@+id/noviceBuySingle" />
+        <Button
+            android:id="@+id/noviceBuySingle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:enabled="@{viewModel.noviceBuySingleButtonEnabled}"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.noviceBuySingleButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/noviceBuySet"
+            app:layout_constraintTop_toBottomOf="@+id/amateurBuySingle" />
 
-    <TextView
-        android:id="@+id/amateurSpeedTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/novice_speed"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/amateurCountTV"
-        app:layout_constraintStart_toEndOf="@+id/amateurCountTV"
-        app:layout_constraintTop_toTopOf="@+id/amateurCountTV" />
+        <Button
+            android:id="@+id/noviceBuySet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@{viewModel.noviceBuySetButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/noviceBuySingle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/noviceBuySingle"
+            app:layout_constraintVertical_bias="1.0"
+            android:onClick="@{viewModel.clickListener}" />
 
-    <Button
-        android:id="@+id/noviceBuySingle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/novice_buy_single_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/noviceBuySet"
-        app:layout_constraintStart_toEndOf="@+id/noviceSpeedTV"
-        app:layout_constraintTop_toBottomOf="@+id/amateurBuySingle" />
+        <!-- Apprentice -->
 
-    <Button
-        android:id="@+id/amateurBuySingle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/novice_buy_single_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/amateurSpeedTV"
-        app:layout_constraintEnd_toStartOf="@+id/noviceBuySet"
-        app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toEndOf="@+id/amateurSpeedTV"
-        app:layout_constraintTop_toTopOf="@+id/amateurSpeedTV" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/apprenticeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/apprentice_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintBottom_toBottomOf="@+id/apprenticeCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="@+id/noviceLabel"
+            app:layout_constraintTop_toTopOf="@+id/apprenticeCountSpeedLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/apprenticeCountSpeedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/noviceCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="@+id/noviceCountSpeedLayout"
+            app:layout_constraintTop_toTopOf="@+id/apprenticeBuySingle"
+            app:layout_constraintBottom_toBottomOf="@id/apprenticeBuySingle">
+
+            <TextView
+                android:id="@+id/apprenticeSpeedTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.apprenticeTotalSpeedString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/apprenticeCountTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/apprenticeCountTV"
+                tools:text="@string/layout_example_speed" />
+
+            <TextView
+                android:id="@+id/apprenticeCountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.apprenticeCountString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/layout_example_count" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/apprenticeBuySet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@{viewModel.apprenticeBuySetButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/apprenticeBuySingle"
+            app:layout_constraintEnd_toEndOf="@+id/noviceBuySet"
+            app:layout_constraintStart_toStartOf="@+id/noviceBuySet"
+            app:layout_constraintTop_toTopOf="@+id/apprenticeBuySingle"
+            android:onClick="@{viewModel.clickListener}" />
+
+        <Button
+            android:id="@+id/apprenticeBuySingle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:enabled="@{viewModel.apprenticeBuySingleButtonEnabled}"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.apprenticeBuySingleButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/apprenticeBuySet"
+            app:layout_constraintStart_toStartOf="@+id/noviceBuySingle"
+            app:layout_constraintTop_toBottomOf="@+id/noviceBuySingle" />
+
+        <!-- Journeyman -->
+
+        <TextView
+            android:id="@+id/journeymanLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/journeymanLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/journeymanCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="@+id/apprenticeLabel"
+            app:layout_constraintTop_toTopOf="@+id/journeymanCountSpeedLayout"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/journeymanCountSpeedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/apprenticeCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="@+id/apprenticeCountSpeedLayout"
+            app:layout_constraintTop_toTopOf="@+id/journeymanBuySingle"
+            app:layout_constraintBottom_toBottomOf="@id/journeymanBuySingle">
+
+            <TextView
+                android:id="@+id/journeymanCountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.journeymenCountString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/layout_example_count" />
+
+            <TextView
+                android:id="@+id/journeymanSpeedTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.journeymenTotalSpeedString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintBottom_toBottomOf="@+id/journeymanCountTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/journeymanCountTV"
+                tools:text="@string/layout_example_speed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/journeymanBuySet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.journeymenBuySetButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/journeymanBuySingle"
+            app:layout_constraintEnd_toEndOf="@+id/apprenticeBuySet"
+            app:layout_constraintStart_toStartOf="@+id/apprenticeBuySet"
+            app:layout_constraintTop_toTopOf="@+id/journeymanBuySingle"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/journeymanBuySingle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:enabled="@{viewModel.journeymenBuySingleButtonEnabled}"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.journeymenBuySingleButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/apprenticeBuySingle"
+            app:layout_constraintStart_toStartOf="@+id/apprenticeBuySingle"
+            app:layout_constraintTop_toBottomOf="@+id/apprenticeBuySingle" />
+
+        <!-- Master -->
+
+        <TextView
+            android:id="@+id/masterLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/master_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintBottom_toBottomOf="@+id/masterCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="@+id/journeymanLabelTextView"
+            app:layout_constraintTop_toTopOf="@+id/masterCountSpeedLayout"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/masterCountSpeedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/journeymanCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="@+id/journeymanCountSpeedLayout"
+            app:layout_constraintTop_toTopOf="@+id/masterBuySingle"
+            app:layout_constraintBottom_toBottomOf="@id/masterBuySingle">
+
+            <TextView
+                android:id="@+id/masterCountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.masterCountString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/layout_example_count" />
+
+            <TextView
+                android:id="@+id/masterSpeedTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.masterTotalSpeedString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintBottom_toBottomOf="@+id/masterCountTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/masterCountTV"
+                tools:text="@string/layout_example_speed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/masterBuySingle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="@{viewModel.masterBuySingleButtonEnabled}"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.masterBuySingleButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/journeymanBuySingle"
+            app:layout_constraintStart_toStartOf="@+id/journeymanBuySingle"
+            app:layout_constraintTop_toBottomOf="@+id/journeymanBuySingle" />
+
+        <Button
+            android:id="@+id/masterBuySet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.masterBuySetButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/masterBuySingle"
+            app:layout_constraintEnd_toEndOf="@+id/journeymanBuySet"
+            app:layout_constraintStart_toStartOf="@+id/journeymanBuySet"
+            app:layout_constraintTop_toTopOf="@+id/masterBuySingle" />
+
+        <!-- Adept -->
+
+        <TextView
+            android:id="@+id/adeptLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/adept_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintBottom_toBottomOf="@+id/adeptCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="@+id/masterLabel"
+            app:layout_constraintTop_toTopOf="@+id/adeptCountSpeedLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/adeptCountSpeedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/masterCountSpeedLayout"
+            app:layout_constraintStart_toStartOf="@+id/masterCountSpeedLayout"
+            app:layout_constraintTop_toTopOf="@+id/adeptBuySingle"
+            app:layout_constraintBottom_toBottomOf="@id/adeptBuySingle">
+
+            <TextView
+                android:id="@+id/adeptCountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.adeptCountString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/layout_example_count" />
+
+            <TextView
+                android:id="@+id/adeptSpeedTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.adeptTotalSpeedString}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                app:layout_constraintBottom_toBottomOf="@+id/adeptCountTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/adeptCountTV"
+                tools:text="@string/layout_example_speed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/adeptBuySingle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="@{viewModel.adeptBuySingleButtonEnabled}"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.adeptBuySingleButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/masterBuySingle"
+            app:layout_constraintStart_toStartOf="@+id/masterBuySingle"
+            app:layout_constraintTop_toBottomOf="@+id/masterBuySingle" />
+
+        <Button
+            android:id="@+id/adeptBuySet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{viewModel.clickListener}"
+            android:text="@{viewModel.adeptBuySetButtonText}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/adeptBuySingle"
+            app:layout_constraintEnd_toEndOf="@+id/masterBuySet"
+            app:layout_constraintStart_toStartOf="@+id/masterBuySet"
+            app:layout_constraintTop_toTopOf="@+id/adeptBuySingle"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/reset"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{viewModel.clickListener}" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

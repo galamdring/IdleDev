@@ -26,8 +26,9 @@ class WorkerDatabaseTest {
         // Using an in-memory database because the information stored here disappears when the
         // process is killed.
         db = Room.databaseBuilder(context, WorkerDatabase::class.java, "testDb.db")
-                // Allowing main thread queries, just for testing.
-                .allowMainThreadQueries()
+            // Allowing main thread queries, just for testing.
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
                 .build()
         workerDao = db.workerDao
     }
@@ -47,8 +48,8 @@ class WorkerDatabaseTest {
         val workers = workerDao.getAllWorkers()
         val workersData = workers.value
         val worker = workerDao.getWorker("novice")
-        val workerData = worker.value
+        val workerData = worker
         assertNotNull(workerData)
-        assertEquals("novice", workerData!!.type, )
+        assertEquals("novice", workerData.type)
     }
 }

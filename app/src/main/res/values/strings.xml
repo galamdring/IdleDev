@@ -13,4 +13,9 @@
     <string name="novice_label">Novice</string>
     <string name="master_label">Master</string>
     <string name="amateur_label">Amateur</string>
+    <string name="reset">Reset</string>
+    <string name="journeymanLabel">Journeyman</string>
+    <string name="adept_label">Adept</string>
+    <string name="layout_example_count">1.23e42154</string>
+    <string name="layout_example_speed">1.23e40005/s</string>
 </resources>
