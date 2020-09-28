@@ -13,7 +13,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   testing:
-    name: Ling Check and testing
+    name: Lint Check and testing
     runs-on: ubuntu-latest
     steps:
       - name: Clone Repo
@@ -30,7 +30,7 @@ jobs:
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
       - name: Run Kotlin Linter
-        run: ./gradlew ktlintDebugCheck
+        run: ./gradlew detekt
 
       - name: Run Android Linter
         run: ./gradlew lintDebug
@@ -45,7 +45,7 @@ jobs:
       - name: Run tests on Firebase Test Lab
         uses: asadmansr/Firebase-Test-Lab-Action@v1.0
         with:
-          arg-spec: 'test-lab-config.yml:android-pixel-4'
+          arg-spec: '.github/test-lab-config.yml:android-pixel-4'
         env:
           SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
 
