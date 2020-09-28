@@ -40,6 +40,13 @@ class WidgetsFragment : Fragment() {
 
     }
 
+    override fun onDestroy() {
+        stateSaver.once = true
+        stateSaver.run()
+        stateSaver.once = false
+        super.onDestroy()
+    }
+
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         setupView(savedInstanceState)
