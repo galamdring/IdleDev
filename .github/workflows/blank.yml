@@ -30,22 +30,22 @@ jobs:
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
       - name: Run Kotlin Linter
-        run: ./gradlew ktlintStagingDebugCheck
+        run: ./gradlew ktlintDebugCheck
 
       - name: Run Android Linter
-        run: ./gradlew lintStagingDebug
+        run: ./gradlew lintDebug
 
       - name: Assemble Debug APK
-        run: ./gradlew assembleStagingDebug
+        run: ./gradlew assembleDebug
 
       - name: Assemble Debug Test APK
-        run: ./gradlew assembleStagingDebugAndroidTest
+        run: ./gradlew assembleDebugAndroidTest
 
       # Run the Firebase Test Lab Action
       - name: Run tests on Firebase Test Lab
         uses: asadmansr/Firebase-Test-Lab-Action@v1.0
         with:
-          arg-spec: 'tests.yml:android-pixel-4'
+          arg-spec: 'test-lab-config.yml:android-pixel-4'
         env:
           SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
 

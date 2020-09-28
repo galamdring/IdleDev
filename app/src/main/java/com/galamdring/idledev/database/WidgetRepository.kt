@@ -2,7 +2,6 @@ package com.galamdring.idledev.database
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 
 class WidgetRepository(private val application: Application) {
     val defaultWidget = Widget(0, 0.0)
@@ -17,7 +16,6 @@ class WidgetRepository(private val application: Application) {
     val widgets: LiveData<Widget>
         get() = widgetDao.getFirst()
 
-
     fun insert(widget: Widget) {
         widgetDao.insert(widget)
     }
@@ -27,5 +25,4 @@ class WidgetRepository(private val application: Application) {
             widgetDao.insert(Widget(0L, 0.0))
         }
     }
-
 }

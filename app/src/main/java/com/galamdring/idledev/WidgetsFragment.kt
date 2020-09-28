@@ -1,23 +1,17 @@
 package com.galamdring.idledev
 
-import android.app.Application
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.fragment_widgets.*
-import kotlin.math.ceil
 import com.galamdring.idledev.database.WidgetRepository
 import com.galamdring.idledev.database.WorkerRepository
 import com.galamdring.idledev.databinding.FragmentWidgetsBinding
-
 
 /**
  * A simple [Fragment] subclass.
@@ -25,7 +19,6 @@ import com.galamdring.idledev.databinding.FragmentWidgetsBinding
  * create an instance of this fragment.
  */
 class WidgetsFragment : Fragment() {
-
 
     lateinit var stateSaver: StateSaver
     lateinit var widgetRepo: WidgetRepository
@@ -35,9 +28,7 @@ class WidgetsFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
         workerViewModel.onSaveInstanceState(outState)
-
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -50,15 +41,11 @@ class WidgetsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         workerViewModel = ViewModelProvider(this).get(WidgetViewModel::class.java)
-        //workerViewModel.allWorkers.observe(viewLifecycleOwner, Observer { it ->
-        //    workerViewModel.updateWorkers(it)
-        //    workerViewModel.allWorkers.removeObservers(viewLifecycleOwner)
-        //} )
-        //workerViewModel.widgetsLive.observe(viewLifecycleOwner, {it -> workerViewModel.updateWidgets(it)})
         workerViewModel.initDB()
 
         val binding: FragmentWidgetsBinding =
@@ -72,11 +59,8 @@ class WidgetsFragment : Fragment() {
         workerViewModel.mastersLive.observe(viewLifecycleOwner, {})
         workerViewModel.widgetsLive.observe(viewLifecycleOwner, {})
 
-
         return binding.root
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,18 +71,14 @@ class WidgetsFragment : Fragment() {
         setupView(savedInstanceState)
     }
 
-
-
-    fun setupView(savedInstanceState: Bundle?){
+    fun setupView(savedInstanceState: Bundle?) {
 
         workerViewModel.loadState(savedInstanceState)
         // Initialize text.
 
         postDelayed(stateSaver, 10000)
         postDelayed(widgetsMan, 500)
-
     }
-
 
     companion object {
         /**
@@ -116,7 +96,6 @@ class WidgetsFragment : Fragment() {
         fun newInstance() =
             WidgetsFragment().apply {
                 arguments = Bundle().apply {
-
                 }
             }
 
@@ -124,6 +103,4 @@ class WidgetsFragment : Fragment() {
             mainHandler.postDelayed(runner, delay)
         }
     }
-
-
 }

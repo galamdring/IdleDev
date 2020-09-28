@@ -3,6 +3,9 @@ package com.galamdring.idledev
 import android.content.Context
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
 
 object WidgetHelpers {
     fun formatNumbers(number: Double): String {
@@ -23,6 +26,12 @@ object WidgetHelpers {
         button.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
         button.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
     }
-
-
 }
+
+@ExperimentalTime
+val Duration.Since
+    get(): Duration
+    {
+        val currentDuration = System.currentTimeMillis().milliseconds
+        return currentDuration - this
+    }

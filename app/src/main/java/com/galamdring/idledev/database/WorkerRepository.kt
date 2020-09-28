@@ -117,7 +117,5 @@ class WorkerRepository(private val application: Application) {
                 }
             }
         }
-
     }
-
 }
