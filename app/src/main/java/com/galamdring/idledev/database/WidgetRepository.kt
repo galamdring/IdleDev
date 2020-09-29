@@ -2,6 +2,7 @@ package com.galamdring.idledev.database
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.runBlocking
 
 class WidgetRepository(private val application: Application) {
     val defaultWidget = Widget(0, 0.0)
@@ -12,15 +13,15 @@ class WidgetRepository(private val application: Application) {
     }
 
     val widget: Widget
-        get() = widgetDao.getWidget() ?: defaultWidget
+        get() = runBlocking { widgetDao.getWidget() ?: defaultWidget }
     val widgets: LiveData<Widget>
         get() = widgetDao.getFirst()
 
     fun insert(widget: Widget) {
-        widgetDao.insert(widget)
+        runBlocking { widgetDao.insert(widget) }
     }
 
-    fun initializeDB() {
+    fun initializeDB() = runBlocking {
         if (!widgetDao.hasItems()) {
             widgetDao.insert(Widget(0L, 0.0))
         }

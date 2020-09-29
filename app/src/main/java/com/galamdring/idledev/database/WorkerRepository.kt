@@ -2,8 +2,10 @@ package com.galamdring.idledev.database
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class WorkerRepository(private val application: Application) {
     companion object {
@@ -59,45 +61,45 @@ class WorkerRepository(private val application: Application) {
         get() = workerDao.getAllWorkers()
 
     val novices: Worker
-        get() {
-            return workerDao.getWorker("novice")
+        get() = runBlocking {
+            return@runBlocking workerDao.getWorker("novice")
         }
 
     val amateurs: Worker
-        get() {
-            return workerDao.getWorker("amateur")
+        get() = runBlocking {
+            return@runBlocking workerDao.getWorker("amateur")
         }
 
     val apprentices: Worker
-        get() {
-            return workerDao.getWorker("apprentice")
+        get() = runBlocking {
+            return@runBlocking workerDao.getWorker("apprentice")
         }
 
     val journeymen: Worker
-        get() {
-            return workerDao.getWorker("journeyman")
+        get() = runBlocking {
+            return@runBlocking workerDao.getWorker("journeyman")
         }
 
     val masters: Worker
-        get() {
-            return workerDao.getWorker("master")
+        get() = runBlocking {
+            return@runBlocking workerDao.getWorker("master")
         }
 
     val adepts: Worker
-        get() {
-            return workerDao.getWorker("adept")
+        get() = runBlocking {
+            return@runBlocking workerDao.getWorker("adept")
         }
 
     fun insert(worker: Worker) {
-        workerDao.insert(worker)
+        GlobalScope.launch { workerDao.insert(worker) }
     }
 
     fun insertAll(workers: List<Worker>) {
-        workerDao.insertAll(workers)
+        GlobalScope.launch { workerDao.insertAll(workers) }
     }
 
-    fun hasType(type: String): Boolean {
-        return workerDao.hasType(type)
+    fun hasType(type: String): Boolean = runBlocking {
+        return@runBlocking workerDao.hasType(type)
     }
 
     val defaultValues = mapOf(
