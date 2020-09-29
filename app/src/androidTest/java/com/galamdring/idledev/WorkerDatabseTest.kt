@@ -8,6 +8,7 @@ import com.galamdring.idledev.database.WorkerDAO
 import com.galamdring.idledev.database.WorkerDatabase
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -44,10 +45,10 @@ class WorkerDatabaseTest {
     fun insertAndGetWorker() {
         val novice = Worker(0,"widgets", "novice", 1.1, 0.0, 0, 1.2,
             10, 1000.0, 1.1, 1000)
-        workerDao.insert(novice)
+        runBlocking { workerDao.insert(novice) }
         val workers = workerDao.getAllWorkers()
         val workersData = workers.value
-        val worker = workerDao.getWorker("novice")
+        val worker = runBlocking { workerDao.getWorker("novice") }
         val workerData = worker
         assertNotNull(workerData)
         assertEquals("novice", workerData.type)

@@ -18,4 +18,5 @@
     <string name="adept_label">Adept</string>
     <string name="layout_example_count">1.23e42154</string>
     <string name="layout_example_speed">1.23e40005/s</string>
+    <string name="shared_preferences_key">thekeyforsharedpreferences</string>
 </resources>
