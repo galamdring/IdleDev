@@ -27,7 +27,6 @@ abstract class WorkerDatabase : RoomDatabase() {
                         "workers_database"
                     )
                         .fallbackToDestructiveMigration()
-                        .allowMainThreadQueries() //TODO: REMOVE THIS!!!
                         .build()
                     INSTANCE = instance
                 }

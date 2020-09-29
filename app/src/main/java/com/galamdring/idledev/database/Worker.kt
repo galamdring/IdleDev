@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.galamdring.idledev.WidgetHelpers
 
-@Entity(tableName="workers")
+@Entity(tableName = "workers")
 data class Worker(
     @PrimaryKey(autoGenerate = true)
     var workerId: Long = 0L,
@@ -37,11 +37,11 @@ data class Worker(
 
     fun totalSpeed(): Double {
         // get the flat speed rate for count
-        var flatSpeed = this.count * this.speed;
-        //bonus based on how many set groups have been purchased
-        var bonusCount = this.purchased / this.setSize;
-        if (bonusCount == 0) return flatSpeed;
-        return flatSpeed * bonusCount * (this.setBonus);
+        var flatSpeed = this.count * this.speed
+        // bonus based on how many set groups have been purchased
+        var bonusCount = this.purchased / this.setSize
+        if (bonusCount == 0) return flatSpeed
+        return flatSpeed * bonusCount * (this.setBonus)
     }
 
     fun produce(msSinceUpdate: Double): Double {
@@ -73,13 +73,13 @@ data class Worker(
     fun increasePrice(numToSet: Int, startingCost: Double, interval: Double): Double {
         var newPrice = startingCost
         for (i in 0 until numToSet) {
-            newPrice = newPrice.times(interval);
+            newPrice = newPrice.times(interval)
         }
         return newPrice
     }
 
     fun purchaseNextSet() {
-        this.purchase(this.countToSet());
+        this.purchase(this.countToSet())
     }
 
     fun priceToCount(count: Int): Double {
@@ -89,7 +89,7 @@ data class Worker(
             priceToCount += currentPrice
             currentPrice *= this.costIncrease
         }
-        return priceToCount;
+        return priceToCount
     }
 
     // priceToCount(count){
@@ -110,5 +110,4 @@ data class Worker(
         }
         return totalPrice
     }
-
 }

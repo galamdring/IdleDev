@@ -1,8 +1,8 @@
 package com.galamdring.idledev
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -11,14 +11,12 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 /**
  * The number of pages (wizard steps) to show in this demo.
  */
 private const val NUM_PAGES = 2
 
 class MainActivity : AppCompatActivity() {
-
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
@@ -32,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         pager.adapter = pagerAdapter
-
 
         TabLayoutMediator(tab_layout, pager) { tab, position ->
             tab.text = titles[position]
@@ -72,13 +69,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     fun Button.DisableIf(condition: Boolean) {
         if (condition) {
             WidgetHelpers.markButtonDisable(this, context)
         } else {
             WidgetHelpers.markButtonEnabled(this, context)
         }
-
     }
 }

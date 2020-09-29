@@ -1,12 +1,14 @@
 package com.galamdring.idledev.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.room.*
-import kotlinx.coroutines.flow.Flow
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 
 @Dao
-interface WorkerDAO{
+interface WorkerDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(worker: Worker)
