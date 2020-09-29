@@ -2,17 +2,18 @@ package com.galamdring.idledev
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.galamdring.idledev.database.*
+import com.galamdring.idledev.database.Widget
+import com.galamdring.idledev.database.WidgetRepository
+import com.galamdring.idledev.database.Worker
+import com.galamdring.idledev.database.WorkerRepository
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
-
 
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -27,7 +28,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
 
     val allWorkers: LiveData<List<Worker>>
         get() = workerRepository.allWorkers
-
 
     private var _widget = widgetRepository.widget ?: widgetRepository.defaultWidget
     var widgets: Widget
@@ -182,7 +182,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         adeptsLive.postValue(_adepts)
     }
 
-
     val noviceCountString = Transformations.map(novicesLive) { worker ->
         WidgetHelpers.formatNumbers(worker.count)
     }
@@ -309,7 +308,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         totalSpeedString(worker)
     }
 
-
     fun totalSpeedString(worker: Worker): String {
         return WidgetHelpers.formatNumbers(worker.totalSpeed()) + "/s"
     }
@@ -321,7 +319,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     fun produceWidget() {
         setWidgetCount(widgets.count + 1)
     }
-
 
     @ExperimentalTime
     var lastRun = System.currentTimeMillis().milliseconds
@@ -599,7 +596,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun resetAll() {
+    private fun resetAll() {
         novices = resetWorker(_novices)
         amateurs = resetWorker(_amateurs)
         apprentices = resetWorker(_apprentices)
@@ -609,7 +606,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         setWidgetCount(0.0)
     }
 
-    fun resetWorker(worker: Worker): Worker {
+    private fun resetWorker(worker: Worker): Worker {
         val resetWorker = workerRepository.defaultValues[worker.type]
             ?: error("worker type $worker.type not found")
         resetWorker.workerId = worker.workerId
@@ -621,4 +618,3 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         workerRepository.insertAll(listOf(_novices, _amateurs, _apprentices, _journeymen, _masters))
     }
 }
-
