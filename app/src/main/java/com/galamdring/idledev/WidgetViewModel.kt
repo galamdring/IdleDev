@@ -88,7 +88,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         apprenticesLive.postValue(_apprentices)
     }
 
-    private var _amateurs = workerRepository.amateurs ?: workerRepository.defaultNovice
+    private var _amateurs = workerRepository.amateurs ?: workerRepository.defaultAmateur
     var amateurs: Worker
         get() = _amateurs
         set(value) {
