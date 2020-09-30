@@ -8,6 +8,6 @@ class WidgetsManager(
     @ExperimentalTime
     override fun run() {
         viewModel.produce()
-        WidgetsFragment.postDelayed(this, 500)
+        WidgetsFragment.postDelayed(this, WidgetsFragment.widgetProductionDelay)
     }
 }

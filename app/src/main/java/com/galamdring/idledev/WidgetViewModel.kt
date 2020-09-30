@@ -17,7 +17,6 @@ import kotlin.time.milliseconds
 
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
 
-
     private val workerRepository: WorkerRepository = WorkerRepository.getInstance(application)
     private val widgetRepository = WidgetRepository(application)
 
@@ -88,7 +87,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         apprenticesLive.postValue(_apprentices)
     }
 
-
     private var _amateurs = workerRepository.amateurs ?: workerRepository.defaultNovice
     var amateurs: Worker
         get() = _amateurs
@@ -134,7 +132,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         _journeymen.cost = cost
         journeymenLive.postValue(_journeymen)
     }
-
 
     private var _masters = workerRepository.masters ?: workerRepository.defaultMaster
     var masters: Worker
@@ -400,7 +397,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         return false
     }
 
-
     private val widgetCountSavedInstanceKey = "widgetCount"
     private val amateurCountSavedInstanceKey = "amateurCount"
     private val apprenticeCountSavedInstanceKey = "apprenticeCount"
@@ -489,8 +485,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
             with(savedInstanceState.getInt(adeptPurchasedCountSavedInstanceKey)) {
                 if (this > 0) setAdeptsPurchasedCount(this)
             }
-
-
         }
     }
 

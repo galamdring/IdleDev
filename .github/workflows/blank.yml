@@ -29,8 +29,13 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
-      - name: Run Kotlin Linter
-        run: ./gradlew detekt
+      - name: detekt
+        uses: natiginfo/action-detekt-all@1.14.0
+        with:
+          args: --config config/detekt.yml
+
+      - name: Run ktlint
+        run: ./gradlew ktlintCheck
 
       - name: Run Android Linter on free version
         run: ./gradlew lintFreeDebug

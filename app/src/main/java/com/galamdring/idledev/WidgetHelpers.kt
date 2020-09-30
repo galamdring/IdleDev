@@ -8,11 +8,13 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
 object WidgetHelpers {
+    const val numberStringLength = 5
+    const val maxNonExponentNum = 100000
     fun formatNumbers(number: Double): String {
-        if (number > 100000) {
-            return String.format("%6.2e", number).padStart(5).filterNot { it == '+' }
+        if (number > maxNonExponentNum) {
+            return String.format("%6.2e", number).padStart(numberStringLength).filterNot { it == '+' }
         }
-        return String.format("%.0f", number).padStart(5)
+        return String.format("%.0f", number).padStart(numberStringLength)
     }
 
     fun markButtonDisable(button: Button, context: Context) {
