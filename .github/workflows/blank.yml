@@ -37,8 +37,8 @@ jobs:
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug
 
-      - name: Assemble Debug Test APK
-        run: ./gradlew assembleDebugAndroidTest
+      - name: Assemble Test APK
+        run: ./gradlew assembleAndroidTest
 
       # Run the Firebase Test Lab Action
       - name: Run tests on Firebase Test Lab
