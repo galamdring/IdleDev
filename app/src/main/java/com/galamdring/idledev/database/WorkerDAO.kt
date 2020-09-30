@@ -19,7 +19,7 @@ interface WorkerDAO {
     suspend fun clear(workers: List<Worker>)
 
     @Query("SELECT * FROM workers where type like :type")
-    suspend fun getWorker(type: String): Worker
+    suspend fun getWorker(type: String): Worker?
 
     @Query("SELECT * FROM workers where type like :type")
     fun getWorkerLiveData(type: String): LiveData<Worker>

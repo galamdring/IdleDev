@@ -60,32 +60,32 @@ class WorkerRepository(private val application: Application) {
     val allWorkers: LiveData<List<Worker>>
         get() = workerDao.getAllWorkers()
 
-    val novices: Worker
+    val novices: Worker?
         get() = runBlocking {
             return@runBlocking workerDao.getWorker("novice")
         }
 
-    val amateurs: Worker
+    val amateurs: Worker?
         get() = runBlocking {
             return@runBlocking workerDao.getWorker("amateur")
         }
 
-    val apprentices: Worker
+    val apprentices: Worker?
         get() = runBlocking {
             return@runBlocking workerDao.getWorker("apprentice")
         }
 
-    val journeymen: Worker
+    val journeymen: Worker?
         get() = runBlocking {
             return@runBlocking workerDao.getWorker("journeyman")
         }
 
-    val masters: Worker
+    val masters: Worker?
         get() = runBlocking {
             return@runBlocking workerDao.getWorker("master")
         }
 
-    val adepts: Worker
+    val adepts: Worker?
         get() = runBlocking {
             return@runBlocking workerDao.getWorker("adept")
         }

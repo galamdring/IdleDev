@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.galamdring.idledev.database.WidgetRepository
 import com.galamdring.idledev.database.WorkerRepository
 import com.galamdring.idledev.databinding.FragmentWidgetsBinding
+import com.google.android.gms.ads.AdRequest
+import kotlinx.android.synthetic.free.banner_ad.*
+import kotlinx.android.synthetic.main.reset_button.*
 
 /**
  * A simple [Fragment] subclass.
@@ -85,6 +88,14 @@ class WidgetsFragment : Fragment() {
 
         postDelayed(stateSaver, 10000)
         postDelayed(widgetsMan, 500)
+
+        if (AppConfig.PRODUCT_FLAVOR=="free"){
+            adView.loadAd(AdRequest.Builder().build())
+        }
+
+        if (DebugConfig.DEBUG_VERSION){
+            resetButton.setOnClickListener(workerViewModel.clickListener)
+        }
     }
 
     companion object {

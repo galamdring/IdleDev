@@ -29,6 +29,24 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            applicationIdSuffix ""
+            debuggable true
+        }
+    }
+    flavorDimensions "version"
+    productFlavors {
+        free {
+            dimension "version"
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+        }
+        paid {
+            dimension "version"
+            applicationIdSuffix ""
+            versionNameSuffix "-paid"
+        }
     }
     buildFeatures {
         dataBinding true
@@ -42,6 +60,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.android.gms:play-services-ads:19.4.0'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
