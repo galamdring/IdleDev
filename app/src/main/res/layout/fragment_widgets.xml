@@ -514,20 +514,11 @@
                 app:layout_constraintVertical_bias="1.0" />
 
 
-            <Button
-                android:id="@+id/resetButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
-                android:onClick="@{viewModel.clickListener}"
-                android:text="@string/reset"
-                app:layout_constraintBottom_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <include layout="@layout/reset_button"/>
         <include layout="@layout/banner_ad" />
     </LinearLayout>
 </layout>

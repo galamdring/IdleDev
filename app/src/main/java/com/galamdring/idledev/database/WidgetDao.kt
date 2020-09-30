@@ -22,5 +22,5 @@ interface WidgetDao {
     suspend fun hasItems(): Boolean
 
     @Query("Select * from widget order by widgetId desc limit 1")
-    suspend fun getWidget(): Widget
+    suspend fun getWidget(): Widget?
 }

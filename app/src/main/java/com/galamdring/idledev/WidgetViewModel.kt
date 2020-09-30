@@ -29,7 +29,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     val allWorkers: LiveData<List<Worker>>
         get() = workerRepository.allWorkers
 
-    private var _widget = widgetRepository.widget ?: widgetRepository.defaultWidget
+    private var _widget = widgetRepository.widget
     var widgets: Widget
         get() = _widget
         set(value) {

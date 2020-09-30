@@ -31,14 +31,8 @@ android {
         }
 
         debug {
-            applicationIdSuffix ".debug"
+            applicationIdSuffix ""
             debuggable true
-        }
-
-        staging {
-            initWith debug
-            manifestPlaceholders = [hostName:"internal.galamdring.com"]
-            applicationIdSuffix ".debugStaging"
         }
     }
     flavorDimensions "version"
@@ -50,7 +44,7 @@ android {
         }
         paid {
             dimension "version"
-            applicationIdSuffix ".paid"
+            applicationIdSuffix ""
             versionNameSuffix "-paid"
         }
     }
