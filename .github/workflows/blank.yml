@@ -36,7 +36,7 @@ jobs:
         run: ./gradlew lintFreeDebug
 
       - name: Run Android Linter on release version
-          run: ./gradlew lintReleaseDebug
+        run: ./gradlew lintReleaseDebug
 
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug
