@@ -18,8 +18,6 @@ import kotlin.time.milliseconds
 @Suppress("LongMethod","ComplexMethod","TooManyFunctions")
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
 
-    // TODO: reduce number of functions here. there is too much being done in the view model.
-    
     private val workerRepository: WorkerRepository = WorkerRepository.getInstance(application)
     private val widgetRepository = WidgetRepository(application)
 
@@ -423,7 +421,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     private val adeptPurchasedCountSavedInstanceKey = "amateurPurchasedCountSavedInstanceKey"
 
     fun loadState(savedInstanceState: Bundle?) {
-        // TODO: Detekt thinks this is a long/complex method. Maybe break it up?
         if (savedInstanceState != null) {
 
             with(savedInstanceState.getDouble(widgetCountSavedInstanceKey)) {
