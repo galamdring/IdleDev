@@ -32,8 +32,11 @@ jobs:
       - name: Run Kotlin Linter
         run: ./gradlew detekt
 
-      - name: Run Android Linter
-        run: ./gradlew lintDebug
+      - name: Run Android Linter on free version
+        run: ./gradlew lintFreeDebug
+
+      - name: Run Android Linter on release version
+          run: ./gradlew lintReleaseDebug
 
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug
