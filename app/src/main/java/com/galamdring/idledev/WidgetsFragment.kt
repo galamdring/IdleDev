@@ -81,8 +81,6 @@ class WidgetsFragment : Fragment() {
         setupView(savedInstanceState)
     }
 
-
-
     fun setupView(savedInstanceState: Bundle?) {
 
         workerViewModel.loadState(savedInstanceState)

@@ -15,7 +15,7 @@ import com.galamdring.idledev.database.WorkerRepository
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
-@Suppress("LongMethod","ComplexMethod","TooManyFunctions")
+@Suppress("LongMethod", "ComplexMethod", "TooManyFunctions")
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
 
     private val workerRepository: WorkerRepository = WorkerRepository.getInstance(application)
