@@ -30,7 +30,7 @@ class WorkerDatabaseTest {
             // Allowing main thread queries, just for testing.
             .allowMainThreadQueries()
             .fallbackToDestructiveMigration()
-                .build()
+            .build()
         workerDao = db.workerDao
     }
 
@@ -43,14 +43,25 @@ class WorkerDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetWorker() {
-        val novice = Worker(0,"widgets", "novice", 1.1, 0.0, 0, 1.2,
-            10, 1000.0, 1.1, 1000)
+        val novice = Worker(
+            0,
+            "widgets",
+            "novice",
+            1.1,
+            0.0,
+            0,
+            1.2,
+            10,
+            1000.0,
+            1.1,
+            1000
+        )
         runBlocking { workerDao.insert(novice) }
         val workers = workerDao.getAllWorkers()
         val workersData = workers.value
         val worker = runBlocking { workerDao.getWorker("novice") }
         val workerData = worker
         assertNotNull(workerData)
-        assertEquals("novice", workerData.type)
+        assertEquals("novice", workerData?.type)
     }
 }

@@ -5,7 +5,7 @@ class StateSaver(var viewModel: WidgetViewModel) : Runnable {
     override fun run() {
         viewModel.saveAll()
         if (!once) {
-            WidgetsFragment.postDelayed(this, 10000)
+            WidgetsFragment.postDelayed(this, WidgetsFragment.stateSaverDelay)
         }
     }
 }

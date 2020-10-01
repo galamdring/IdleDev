@@ -29,17 +29,16 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
-      - name: Run Kotlin Linter
-        run: ./gradlew detekt
-
-      - name: Run Android Linter
-        run: ./gradlew lintDebug
+      - name: detekt
+        uses: natiginfo/action-detekt-all@1.14.0
+        with:
+          args: --config config/detekt.yml
 
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug
 
-      - name: Assemble Debug Test APK
-        run: ./gradlew assembleDebugAndroidTest
+      - name: Assemble Test APK
+        run: ./gradlew assembleAndroidTest
 
       # Run the Firebase Test Lab Action
       - name: Run tests on Firebase Test Lab

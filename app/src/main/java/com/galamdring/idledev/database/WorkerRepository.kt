@@ -23,31 +23,37 @@ class WorkerRepository(private val application: Application) {
         }
     }
 
+    @Suppress("MagicNumber")
     val defaultAmateur = Worker(
         0, "widgets", "amateur", 1.2, 0.0, 0, 1.2,
         10, 100.0, 1.1, 1000
     )
 
+    @Suppress("MagicNumber")
     val defaultNovice = Worker(
         0, "widgets", "novice", 1.0, 0.0, 0, 1.2,
         10, 1000.0, 1.2, 1000
     )
 
+    @Suppress("MagicNumber")
     val defaultApprentice = Worker(
         0, "widgets", "apprentice", .8, 0.0, 0, 1.2,
         10, 20000.0, 1.3, 1000
     )
 
+    @Suppress("MagicNumber")
     val defaultJourneyman = Worker(
         0, "widgets", "journeyman", .7, 0.0, 0, 1.2,
         10, 1000000.0, 1.4, 1000
     )
 
+    @Suppress("MagicNumber")
     val defaultMaster = Worker(
         0, "widgets", "master", .6, 0.0, 0, 1.2,
         10, 1000000000.0, 1.5, 1000
     )
 
+    @Suppress("MagicNumber")
     val defaultAdept = Worker(
         0, "widgets", "adept", .5, 0.0, 0, 1.2,
         10, 100000000000.0, 1.6, 1000

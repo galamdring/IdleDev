@@ -86,14 +86,15 @@ class WidgetsFragment : Fragment() {
         workerViewModel.loadState(savedInstanceState)
         // Initialize text.
 
-        postDelayed(stateSaver, 10000)
-        postDelayed(widgetsMan, 500)
+        postDelayed(stateSaver, stateSaverDelay)
+        postDelayed(widgetsMan, widgetProductionDelay)
 
-        if (AppConfig.PRODUCT_FLAVOR=="free"){
+        if (AppConfig.PRODUCT_FLAVOR == "free") {
+            adView.adUnitId = DebugConfig.adMobId
             adView.loadAd(AdRequest.Builder().build())
         }
 
-        if (DebugConfig.DEBUG_VERSION){
+        if (DebugConfig.DEBUG_VERSION) {
             resetButton.setOnClickListener(workerViewModel.clickListener)
         }
     }
@@ -109,6 +110,8 @@ class WidgetsFragment : Fragment() {
          */
 
         private val mainHandler = Handler(Looper.getMainLooper())
+        const val stateSaverDelay = 10000.toLong()
+        const val widgetProductionDelay = 500.toLong()
 
         @JvmStatic
         fun newInstance() =

@@ -1,5 +1,5 @@
 package com.galamdring.idledev
 
 object AppConfig {
-    val PRODUCT_FLAVOR = "paid"
+    const val PRODUCT_FLAVOR = "paid"
 }

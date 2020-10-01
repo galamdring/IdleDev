@@ -1,7 +1,6 @@
 package com.galamdring.idledev
 
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -64,18 +63,10 @@ class MainActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> return WidgetsFragment()
-                1 -> return DodadsFragment()
+                0 -> WidgetsFragment()
+                1 -> DodadsFragment()
                 else -> Fragment()
             }
-        }
-    }
-
-    fun Button.DisableIf(condition: Boolean) {
-        if (condition) {
-            WidgetHelpers.markButtonDisable(this, context)
-        } else {
-            WidgetHelpers.markButtonEnabled(this, context)
         }
     }
 }
