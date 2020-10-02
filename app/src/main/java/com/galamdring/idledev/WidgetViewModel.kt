@@ -387,7 +387,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun purchaseWorkers(worker: Worker, count: Int): Boolean {
-        val cost = worker.costToCount(count)
+        val cost = worker.priceToCount(count)
         if (cost < widgets.count) {
             val widgetCopy = widgets
             widgetCopy.count -= cost
