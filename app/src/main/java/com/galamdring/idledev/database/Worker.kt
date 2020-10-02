@@ -92,22 +92,4 @@ data class Worker(
         return priceToCount
     }
 
-    // priceToCount(count){
-    //        var priceToCount = new Decimal(0);
-    //        var currentPrice = this.cost;
-    //        for (var i=0; i < count; i++){
-    //            priceToCount=priceToCount.add(currentPrice);
-    //            currentPrice = currentPrice.times(this.costIncrease);
-    //        }
-    //        return priceToCount;
-    //    }
-    fun costToCount(count: Int): Double {
-        var totalPrice = 0.0
-        var lastPrice = cost
-        for (i in 0 until count) {
-            totalPrice += lastPrice
-            lastPrice *= costIncrease
-        }
-        return totalPrice
-    }
 }
