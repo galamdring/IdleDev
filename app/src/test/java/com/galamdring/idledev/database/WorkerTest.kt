@@ -1,6 +1,6 @@
 package com.galamdring.idledev.database
 
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class WorkerTest {
@@ -12,20 +12,19 @@ class WorkerTest {
     @Test
     fun getCountString() {
         val myWorker = testWorker
-        assert(myWorker.countString == "    0")
+        assertEquals(myWorker.countString, "    0")
     }
 
     @Test
     fun totalSpeed() {
-        assert(testWorker.totalSpeed() == 0.0)
+        assertEquals(testWorker.totalSpeed(), 0.0, 1.0)
     }
 
     @Test
     fun produce() {
         val myworker = testWorker.copy()
         myworker.purchaseNextSet()
-        assertEquals("worker should produce",12.0, myworker.produce(1000.0))
-
+        assertEquals("worker should produce", 12.0, myworker.produce(1000.0), 1.0)
     }
 
     @Test
@@ -39,7 +38,7 @@ class WorkerTest {
     fun priceToSet() {
         val myworker = testWorker.copy()
         myworker.purchase(5)
-        assertEquals(18517.082111999996, myworker.priceToSet())
+        assertEquals(18517.082111999996, myworker.priceToSet(), 1.0)
     }
 
     @Test
@@ -47,14 +46,14 @@ class WorkerTest {
         val worker = testWorker.copy()
         worker.purchase(5)
         assertEquals(5, worker.purchased)
-        assertEquals(5.0, worker.count)
+        assertEquals(5.0, worker.count, 1.0)
     }
 
     @Test
     fun increasePrice() {
         val worker = testWorker.copy()
         val cost = worker.cost
-        assertEquals(cost*worker.costIncrease, worker.increasePrice(1, cost, worker.costIncrease))
+        assertEquals(cost * worker.costIncrease, worker.increasePrice(1, cost, worker.costIncrease), 1.0)
     }
 
     @Test
@@ -62,12 +61,12 @@ class WorkerTest {
         val worker = testWorker.copy()
         worker.purchaseNextSet()
         assertEquals(10, worker.purchased)
-        assertEquals(10.0, worker.count)
+        assertEquals(10.0, worker.count, 1.0)
     }
 
     @Test
     fun priceToCount() {
-        assertEquals(testWorker.cost, testWorker.priceToCount(1))
-        assertEquals((testWorker.cost+testWorker.cost*testWorker.costIncrease), testWorker.priceToCount(2))
+        assertEquals(testWorker.cost, testWorker.priceToCount(1), 1.0)
+        assertEquals((testWorker.cost + testWorker.cost * testWorker.costIncrease), testWorker.priceToCount(2), 1.0)
     }
 }
