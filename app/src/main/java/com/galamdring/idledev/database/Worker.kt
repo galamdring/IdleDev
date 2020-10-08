@@ -88,8 +88,6 @@ data class Worker(
         var currentPrice = this.cost
         for (i in 0 until count) {
             priceToCount += currentPrice
-            // We changed this to be only on set changes, and since we only call this up to the set, we don't need to deal with increases.
-            //currentPrice *= this.costIncrease
         }
         return priceToCount
     }
