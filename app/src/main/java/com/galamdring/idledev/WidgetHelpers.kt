@@ -14,7 +14,7 @@ object WidgetHelpers {
         if (number > maxNonExponentNum) {
             return String.format("%6.2e", number).padStart(numberStringLength).filterNot { it == '+' }
         }
-        return String.format("%.0f", number).padStart(numberStringLength)
+        return String.format("%.2f", number).padStart(numberStringLength)
     }
 
     fun markButtonDisable(button: Button, context: Context) {
