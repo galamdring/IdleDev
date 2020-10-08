@@ -65,9 +65,10 @@ data class Worker(
         }
         this.count += count
         this.purchased += count
-
-        // Increase cost for the next one
-        this.cost = increasePrice(count, this.cost, this.costIncrease)
+        if ((this.purchased % setSize) < 1) {
+            // Increase cost for the next one
+            this.cost = increasePrice(count, this.cost, this.costIncrease)
+        }
     }
 
     fun increasePrice(numToSet: Int, startingCost: Double, interval: Double): Double {
@@ -87,7 +88,6 @@ data class Worker(
         var currentPrice = this.cost
         for (i in 0 until count) {
             priceToCount += currentPrice
-            currentPrice *= this.costIncrease
         }
         return priceToCount
     }
