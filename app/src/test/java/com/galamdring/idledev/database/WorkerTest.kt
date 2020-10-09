@@ -38,7 +38,7 @@ class WorkerTest {
     fun priceToSet() {
         val myworker = testWorker.copy()
         myworker.purchase(5)
-        assertEquals(18517.082111999996, myworker.priceToSet(), 1.0)
+        assertEquals(myworker.cost * 5, myworker.priceToSet(), 1.0)
     }
 
     @Test
@@ -67,6 +67,6 @@ class WorkerTest {
     @Test
     fun priceToCount() {
         assertEquals(testWorker.cost, testWorker.priceToCount(1), 1.0)
-        assertEquals((testWorker.cost + testWorker.cost * testWorker.costIncrease), testWorker.priceToCount(2), 1.0)
+        assertEquals((testWorker.cost + testWorker.cost), testWorker.priceToCount(2), 1.0)
     }
 }
