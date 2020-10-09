@@ -45,7 +45,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     val novicesLive: MutableLiveData<Worker>
         get() = noviceManager.WorkerLive
 
-
     var apprenticeManager =
         WorkerManager.getWorker(WorkerManager.ApprenticeString, workerRepository)
     val apprenticesLive: MutableLiveData<Worker>
@@ -60,16 +59,13 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     val journeymenLive: MutableLiveData<Worker>
         get() = journeymanManager.WorkerLive
 
-
     var masterManager = WorkerManager.getWorker(WorkerManager.MasterString, workerRepository)
     val mastersLive: MutableLiveData<Worker>
         get() = masterManager.WorkerLive
 
-
     var adeptManager = WorkerManager.getWorker(WorkerManager.AdeptString, workerRepository)
     val adeptsLive: MutableLiveData<Worker>
         get() = adeptManager.WorkerLive
-
 
     val noviceBuySingleButtonEnabled = Transformations.map(novicesLive) { worker ->
         worker.cost < _widget.count
@@ -112,7 +108,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     val adeptBuySetButtonEnabled = Transformations.map(adeptsLive) { worker ->
         worker.priceToSet() < _widget.count
     }
-
 
     val widgetCountString =
         Transformations.map(widgetsLive) { widget -> WidgetHelpers.formatNumbers(widget.count) }
@@ -180,7 +175,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
             setWidgetCount(_widget.count - cost)
         }
     }
-
 
     private val widgetCountSavedInstanceKey = "widgetCount"
     private val amateurCountSavedInstanceKey = "amateurCount"
