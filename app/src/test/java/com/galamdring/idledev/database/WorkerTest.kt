@@ -10,12 +10,6 @@ class WorkerTest {
     )
 
     @Test
-    fun getCountString() {
-        val myWorker = testWorker
-        assertEquals(myWorker.countString, "    0")
-    }
-
-    @Test
     fun totalSpeed() {
         assertEquals(testWorker.totalSpeed(), 0.0, 1.0)
     }
