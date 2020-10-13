@@ -3,7 +3,6 @@ package com.galamdring.idledev.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.galamdring.idledev.WidgetHelpers
 
 @Entity(tableName = "workers")
 data class Worker(
@@ -31,9 +30,6 @@ data class Worker(
     var interval: Int
 
 ) {
-
-    val countString: String
-        get() = WidgetHelpers.formatNumbers(count)
 
     fun totalSpeed(): Double {
         // get the flat speed rate for count

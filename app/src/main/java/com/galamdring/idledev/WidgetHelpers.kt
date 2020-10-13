@@ -1,39 +1,12 @@
 package com.galamdring.idledev
 
-import android.content.Context
-import android.widget.Button
-import androidx.core.content.ContextCompat
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
-
 object WidgetHelpers {
-    const val numberStringLength = 5
-    const val maxNonExponentNum = 100000
+    private const val numberStringLength = 5
+    private const val maxNonExponentNum = 100000
     fun formatNumbers(number: Double): String {
         if (number > maxNonExponentNum) {
-            return String.format("%6.2e", number).padStart(numberStringLength).filterNot { it == '+' }
+            return String.format("%6.2e$number").padStart(numberStringLength).filterNot { it == '+' }
         }
         return String.format("%.2f", number).padStart(numberStringLength)
     }
-
-    fun markButtonDisable(button: Button, context: Context) {
-        button.isEnabled = false
-        button.setTextColor(ContextCompat.getColor(context, R.color.buttonDisabledText))
-        button.setBackgroundColor(ContextCompat.getColor(context, R.color.buttonDisabledBackground))
-    }
-
-    fun markButtonEnabled(button: Button, context: Context) {
-        button.isEnabled = true
-        button.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
-        button.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
-    }
 }
-
-@ExperimentalTime
-val Duration.Since
-    get(): Duration
-    {
-        val currentDuration = System.currentTimeMillis().milliseconds
-        return currentDuration - this
-    }
