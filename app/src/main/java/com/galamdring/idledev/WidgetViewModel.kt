@@ -13,6 +13,7 @@ import com.galamdring.idledev.database.WidgetRepository
 import com.galamdring.idledev.database.Worker
 import com.galamdring.idledev.database.WorkerRepository
 import com.galamdring.idledev.extensions.Since
+import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
@@ -246,10 +247,13 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun purchaseWorker(worker: WorkerManager, count: Int) {
+        /*
         val cost = worker.priceToCount(count)
         if (cost <= _widget.count && worker.purchase(count)) {
             setWidgetCount(_widget.count - cost)
         }
+        */
+        runBlocking { Purchaser.purchaseWorker(worker, widgets, count) }
     }
 
     val clickListener = View.OnClickListener { view ->
