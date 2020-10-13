@@ -7,16 +7,16 @@ import com.galamdring.idledev.database.WorkerRepository
 
 class WorkerManager(private var worker: Worker) {
 
-    val WorkerBuySingleButtonFormatString = "Buy 1\n%s"
-    val WorkerBuySetButtonFormatString = "Buy %d\n%s"
+    private val workerBuySingleButtonFormatString = "Buy 1\n%s"
+    private val workerBuySetButtonFormatString = "Buy %d\n%s"
 
-    val WorkerLive = MutableLiveData<Worker>(worker)
+    val workerLive = MutableLiveData<Worker>(worker)
 
     var count: Double
         get() = worker.count
         set(value) {
             worker.count = value
-            WorkerLive.postValue(worker)
+            workerLive.postValue(worker)
         }
 
     val countToSet: Int
@@ -26,14 +26,14 @@ class WorkerManager(private var worker: Worker) {
         get() = worker.purchased
         set(count) {
             worker.purchased = count
-            WorkerLive.postValue(worker)
+            workerLive.postValue(worker)
         }
 
     var cost: Double
         get() = worker.cost
         set(cost: Double) {
             worker.cost = cost
-            WorkerLive.postValue(worker)
+            workerLive.postValue(worker)
         }
 
     fun priceToCount(count: Int): Double {
@@ -52,27 +52,34 @@ class WorkerManager(private var worker: Worker) {
         return worker.produce(inMilliseconds)
     }
 
-    val CountString = Transformations.map(WorkerLive) { worker ->
+    val countString = Transformations.map(workerLive) { worker ->
         WidgetHelpers.formatNumbers(worker.count)
     }
 
-    val TotalSpeedString = Transformations.map(WorkerLive) { worker ->
+    val totalSpeedString = Transformations.map(workerLive) { worker ->
         WidgetHelpers.formatNumbers(worker.totalSpeed()) + "/s"
     }
 
-    val BuySingleButtonText = Transformations.map(WorkerLive) { worker ->
-        WorkerBuySingleButtonFormatString
+    val buySingleButtonText = Transformations.map(workerLive) { worker ->
+        workerBuySingleButtonFormatString
             .format(WidgetHelpers.formatNumbers(worker.cost))
     }
 
-    val BuySetButtonText = Transformations.map(WorkerLive) { worker ->
-        WorkerBuySetButtonFormatString
+    val buySetButtonText = Transformations.map(workerLive) { worker ->
+        workerBuySetButtonFormatString
             .format(worker.countToSet(), WidgetHelpers.formatNumbers(worker.priceToSet()))
     }
 
     fun setWorker(newWorker: Worker) {
         worker = newWorker
-        WorkerLive.postValue(worker)
+        workerLive.postValue(worker)
+    }
+
+    fun loadState(stateCount: Double, stateCost: Double, statePurchasedCount: Int) {
+        if (stateCount > 0) count = stateCount
+        if (stateCost > 0) cost = stateCost
+        if (statePurchasedCount > 0) purchasedCount = statePurchasedCount
+
     }
 
     companion object Factory {
@@ -85,69 +92,96 @@ class WorkerManager(private var worker: Worker) {
         const val ApprenticeString = "apprentice"
         private lateinit var apprentice: WorkerManager
 
-        val JourneymanString = "journeyman"
+        const val JourneymanString = "journeyman"
         private lateinit var journeyman: WorkerManager
 
-        val MasterString = "master"
+        const val MasterString = "master"
         private lateinit var master: WorkerManager
 
-        val AdeptString = "adept"
+        const val AdeptString = "adept"
         private lateinit var adept: WorkerManager
 
+
+
         fun getWorker(type: String, workerRepository: WorkerRepository): WorkerManager {
+            var worker = WorkerManager(workerRepository.defaultAmateur)
             when (type) {
                 NoviceString -> {
-                    if (this::novice.isInitialized) {
-                        return novice
-                    }
-                    val worker = workerRepository.novices ?: workerRepository.defaultNovice
-                    novice = WorkerManager(worker)
-                    return novice
+                    worker = getNovice(workerRepository)
                 }
                 AmateurString -> {
-                    if (this::amateur.isInitialized) {
-                        return amateur
-                    }
-                    val worker = workerRepository.amateurs ?: workerRepository.defaultAmateur
-                    amateur = WorkerManager(worker)
-                    return amateur
+                    worker = getAmateur(workerRepository)
                 }
                 ApprenticeString -> {
-                    if (this::apprentice.isInitialized) {
-                        return apprentice
-                    }
-                    val worker = workerRepository.apprentices ?: workerRepository.defaultApprentice
-                    apprentice = WorkerManager(worker)
-                    return apprentice
+                    worker = getApprentice(workerRepository)
                 }
                 JourneymanString -> {
-                    if (this::journeyman.isInitialized) {
-                        return journeyman
-                    }
-                    val worker = workerRepository.journeymen ?: workerRepository.defaultJourneyman
-                    journeyman = WorkerManager(worker)
-                    return journeyman
+                    worker = getJourneyman(workerRepository)
                 }
                 MasterString -> {
-                    if (this::master.isInitialized) {
-                        return master
-                    }
-                    val worker = workerRepository.masters ?: workerRepository.defaultMaster
-                    master = WorkerManager(worker)
-                    return master
+                    worker = getMaster(workerRepository)
                 }
                 AdeptString -> {
-                    if (this::adept.isInitialized) {
-                        return adept
-                    }
-                    val worker = workerRepository.adepts ?: workerRepository.defaultAdept
-                    adept = WorkerManager(worker)
-                    return adept
-                }
-                else -> {
-                    return WorkerManager(workerRepository.defaultAmateur)
+                    worker = getAdept(workerRepository)
                 }
             }
+            return worker
+        }
+
+        private fun getNovice(workerRepository: WorkerRepository): WorkerManager{
+            if (!this::novice.isInitialized) {
+                novice = WorkerManager(workerRepository.novices ?: workerRepository.defaultNovice)
+            }
+            return novice
+        }
+
+        private fun getAdept(
+            workerRepository: WorkerRepository,
+        ): WorkerManager {
+            if (!this::adept.isInitialized) {
+                adept = WorkerManager(workerRepository.adepts ?: workerRepository.defaultAdept)
+            }
+            return adept
+        }
+
+        private fun getMaster(
+            workerRepository: WorkerRepository,
+        ): WorkerManager {
+            if (!this::master.isInitialized) {
+                master = WorkerManager(workerRepository.masters ?: workerRepository.defaultMaster)
+            }
+            return master
+        }
+
+        private fun getJourneyman(
+            workerRepository: WorkerRepository,
+        ): WorkerManager {
+            if (!this::journeyman.isInitialized) {
+                journeyman =
+                    WorkerManager(workerRepository.journeymen ?: workerRepository.defaultJourneyman)
+            }
+            return journeyman
+        }
+
+        private fun getApprentice(
+            workerRepository: WorkerRepository,
+        ): WorkerManager {
+            if (!this::apprentice.isInitialized) {
+                apprentice = WorkerManager(
+                    workerRepository.apprentices ?: workerRepository.defaultApprentice
+                )
+            }
+            return apprentice
+        }
+
+        private fun getAmateur(
+            workerRepository: WorkerRepository,
+        ): WorkerManager {
+            if (!this::amateur.isInitialized) {
+                amateur =
+                    WorkerManager(workerRepository.amateurs ?: workerRepository.defaultAmateur)
+            }
+            return amateur
         }
 
         fun saveAll(repository: WorkerRepository) {
