@@ -1,5 +1,5 @@
 on:
-  push:
+  create:
     branches:
       - /ref/tags/v*
 name: Handle Release
