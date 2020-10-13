@@ -126,4 +126,8 @@ class WorkerRepository(private val application: Application) {
             }
         }
     }
+
+    fun getWorker(type: String): Worker {
+        return defaultValues[type].let { defaultAmateur }
+    }
 }

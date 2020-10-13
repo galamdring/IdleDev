@@ -15,7 +15,6 @@ import com.galamdring.idledev.database.WorkerRepository
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
-@Suppress("LongMethod", "ComplexMethod", "TooManyFunctions")
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
 
     private val workerRepository: WorkerRepository = WorkerRepository.getInstance(application)
@@ -42,275 +41,74 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         widgetsLive.postValue(_widget)
     }
 
-    private var _novices = workerRepository.novices ?: workerRepository.defaultNovice
-    var novices: Worker
-        get() = _novices
-        set(value) {
-            _novices = value
-            novicesLive.postValue(value)
-        }
-    var novicesLive: MutableLiveData<Worker> = MutableLiveData(_novices)
-    private fun setNoviceCount(count: Double) {
-        _novices.count = count
-        novicesLive.postValue(_novices)
-    }
+    var noviceManager = WorkerManager.getWorker(WorkerManager.NoviceString, workerRepository)
+    val novicesLive: MutableLiveData<Worker>
+        get() = noviceManager.workerLive
 
-    private fun setNovicesPurchasedCount(count: Int) {
-        _novices.purchased = count
-        novicesLive.postValue(_novices)
-    }
+    var apprenticeManager =
+        WorkerManager.getWorker(WorkerManager.ApprenticeString, workerRepository)
+    val apprenticesLive: MutableLiveData<Worker>
+        get() = apprenticeManager.workerLive
 
-    private fun setNovicesCost(cost: Double) {
-        _novices.cost = cost
-        novicesLive.postValue(_novices)
-    }
+    var amateurManager = WorkerManager.getWorker(WorkerManager.AmateurString, workerRepository)
+    val amateursLive: MutableLiveData<Worker>
+        get() = amateurManager.workerLive
 
-    private var _apprentices = workerRepository.apprentices ?: workerRepository.defaultApprentice
-    var apprentices: Worker
-        get() = _apprentices
-        set(value) {
-            _apprentices = value
-            apprenticesLive.postValue(value)
-        }
-    var apprenticesLive: MutableLiveData<Worker> = MutableLiveData(_apprentices)
-    private fun setApprenticesCount(count: Double) {
-        _apprentices.count = count
-        apprenticesLive.postValue(_apprentices)
-    }
+    var journeymanManager =
+        WorkerManager.getWorker(WorkerManager.JourneymanString, workerRepository)
+    val journeymenLive: MutableLiveData<Worker>
+        get() = journeymanManager.workerLive
 
-    private fun setApprenticesPurchasedCount(count: Int) {
-        _apprentices.purchased = count
-        apprenticesLive.postValue(_apprentices)
-    }
+    var masterManager = WorkerManager.getWorker(WorkerManager.MasterString, workerRepository)
+    val mastersLive: MutableLiveData<Worker>
+        get() = masterManager.workerLive
 
-    private fun setApprenticesCost(cost: Double) {
-        _apprentices.cost = cost
-        apprenticesLive.postValue(_apprentices)
-    }
+    var adeptManager = WorkerManager.getWorker(WorkerManager.AdeptString, workerRepository)
+    val adeptsLive: MutableLiveData<Worker>
+        get() = adeptManager.workerLive
 
-    private var _amateurs = workerRepository.amateurs ?: workerRepository.defaultAmateur
-    var amateurs: Worker
-        get() = _amateurs
-        set(value) {
-            _amateurs = value
-            amateursLive.postValue(value)
-        }
-    var amateursLive: MutableLiveData<Worker> = MutableLiveData(_amateurs)
-    private fun setAmateursCount(count: Double) {
-        _amateurs.count = count
-        amateursLive.postValue(_amateurs)
-    }
-
-    private fun setAmateursPurchasedCount(count: Int) {
-        _amateurs.purchased = count
-        amateursLive.postValue(_amateurs)
-    }
-
-    private fun setAmateursCost(cost: Double) {
-        _amateurs.cost = cost
-        amateursLive.postValue(_amateurs)
-    }
-
-    private var _journeymen = workerRepository.journeymen ?: workerRepository.defaultJourneyman
-    var journeymen: Worker
-        get() = _journeymen
-        set(value) {
-            _journeymen = value
-            journeymenLive.postValue(value)
-        }
-    var journeymenLive: MutableLiveData<Worker> = MutableLiveData(_journeymen)
-    private fun setJourneymenCount(count: Double) {
-        _journeymen.count = count
-        journeymenLive.postValue(_journeymen)
-    }
-
-    private fun setJourneymenPurchasedCount(count: Int) {
-        _journeymen.purchased = count
-        journeymenLive.postValue(_journeymen)
-    }
-
-    private fun setJourneymenCost(cost: Double) {
-        _journeymen.cost = cost
-        journeymenLive.postValue(_journeymen)
-    }
-
-    private var _masters = workerRepository.masters ?: workerRepository.defaultMaster
-    var masters: Worker
-        get() = _masters
-        set(value) {
-            _masters = value
-            mastersLive.postValue(value)
-        }
-    var mastersLive: MutableLiveData<Worker> = MutableLiveData(_masters)
-    private fun setMastersCount(count: Double) {
-        _masters.count = count
-        mastersLive.postValue(_masters)
-    }
-
-    private fun setMastersPurchasedCount(count: Int) {
-        _masters.purchased = count
-        mastersLive.postValue(_masters)
-    }
-
-    private fun setMastersCost(cost: Double) {
-        _masters.cost = cost
-        mastersLive.postValue(_masters)
-    }
-
-    private var _adepts = workerRepository.adepts ?: workerRepository.defaultAdept
-    var adepts: Worker
-        get() = _adepts
-        set(value) {
-            _adepts = value
-            adeptsLive.postValue(value)
-        }
-    var adeptsLive: MutableLiveData<Worker> = MutableLiveData(_adepts)
-    private fun setAdeptsCount(count: Double) {
-        _adepts.count = count
-        adeptsLive.postValue(_adepts)
-    }
-
-    private fun setAdeptsPurchasedCount(count: Int) {
-        _adepts.purchased = count
-        adeptsLive.postValue(_adepts)
-    }
-
-    private fun setAdeptsCost(cost: Double) {
-        _adepts.cost = cost
-        adeptsLive.postValue(_adepts)
-    }
-
-    val noviceCountString = Transformations.map(novicesLive) { worker ->
-        WidgetHelpers.formatNumbers(worker.count)
-    }
-    val noviceCount = Transformations.map(novicesLive) { worker ->
-        worker.count
-    }
-    val noviceTotalSpeedString = Transformations.map(novicesLive) { worker ->
-        totalSpeedString(worker)
-    }
-    val noviceBuySingleButtonText = Transformations.map(novicesLive) { worker ->
-        application.resources.getString(R.string.novice_buy_single_button)
-            .format(WidgetHelpers.formatNumbers(worker.cost))
-    }
     val noviceBuySingleButtonEnabled = Transformations.map(novicesLive) { worker ->
         worker.cost < _widget.count
     }
-    val noviceBuySetButtonText = Transformations.map(novicesLive) { worker ->
-        application.resources.getString(R.string.novice_buy_set_button)
-            .format(worker.countToSet(), WidgetHelpers.formatNumbers(worker.priceToSet()))
+    val noviceBuySetButtonEnabled = Transformations.map(novicesLive) { worker ->
+        worker.priceToSet() < _widget.count
     }
 
-    val amateurCountString = Transformations.map(amateursLive) { worker ->
-        WidgetHelpers.formatNumbers(worker.count)
-    }
-    val amateurCount = Transformations.map(amateursLive) { worker ->
-        worker.count
-    }
-    val amateurBuySingleButtonText = Transformations.map(amateursLive) { worker ->
-        application.resources.getString(R.string.novice_buy_single_button)
-            .format(WidgetHelpers.formatNumbers(worker.cost))
-    }
     val amateurBuySingleButtonEnabled = Transformations.map(amateursLive) { worker ->
         worker.cost < _widget.count
     }
-    val amateurBuySetButtonText = Transformations.map(amateursLive) { worker ->
-        application.resources.getString(R.string.novice_buy_set_button)
-            .format(worker.countToSet(), WidgetHelpers.formatNumbers(worker.priceToSet()))
-    }
-    val amateurTotalSpeedString = Transformations.map(amateursLive) { worker ->
-        totalSpeedString(worker)
+    val amateurBuySetButtonEnabled = Transformations.map(amateursLive) { worker ->
+        worker.priceToSet() < _widget.count
     }
 
-    val apprenticeCountString = Transformations.map(apprenticesLive) { worker ->
-        WidgetHelpers.formatNumbers(worker.count)
-    }
-    val apprenticeCount = Transformations.map(apprenticesLive) { worker ->
-        worker.count
-    }
-    val apprenticeBuySingleButtonText = Transformations.map(apprenticesLive) { worker ->
-        application.resources.getString(R.string.novice_buy_single_button)
-            .format(WidgetHelpers.formatNumbers(worker.cost))
-    }
     val apprenticeBuySingleButtonEnabled = Transformations.map(apprenticesLive) { worker ->
         worker.cost < _widget.count
     }
-    val apprenticeBuySetButtonText = Transformations.map(apprenticesLive) { worker ->
-        application.resources.getString(R.string.novice_buy_set_button)
-            .format(worker.countToSet(), WidgetHelpers.formatNumbers(worker.priceToSet()))
-    }
-    val apprenticeTotalSpeedString = Transformations.map(apprenticesLive) { worker ->
-        totalSpeedString(worker)
+    val apprenticeBuySetButtonEnabled = Transformations.map(apprenticesLive) { worker ->
+        worker.priceToSet() < _widget.count
     }
 
-    val journeymenCountString = Transformations.map(journeymenLive) { worker ->
-        WidgetHelpers.formatNumbers(worker.count)
-    }
-    val journeymenCount = Transformations.map(journeymenLive) { worker ->
-        worker.count
-    }
-    val journeymenBuySingleButtonText = Transformations.map(journeymenLive) { worker ->
-        application.resources.getString(R.string.novice_buy_single_button)
-            .format(WidgetHelpers.formatNumbers(worker.cost))
-    }
     val journeymenBuySingleButtonEnabled = Transformations.map(journeymenLive) { worker ->
         worker.cost < _widget.count
     }
-    val journeymenBuySetButtonText = Transformations.map(journeymenLive) { worker ->
-        application.resources.getString(R.string.novice_buy_set_button)
-            .format(worker.countToSet(), WidgetHelpers.formatNumbers(worker.priceToSet()))
-    }
-    val journeymenTotalSpeedString = Transformations.map(journeymenLive) { worker ->
-        totalSpeedString(worker)
+    val journeymenBuySetButtonEnabled = Transformations.map(journeymenLive) { worker ->
+        worker.priceToSet() < _widget.count
     }
 
-    val masterCountString = Transformations.map(mastersLive) { worker ->
-        WidgetHelpers.formatNumbers(worker.count)
-    }
-    val masterCount = Transformations.map(mastersLive) { worker ->
-        worker.count
-    }
-    val masterBuySingleButtonText = Transformations.map(mastersLive) { worker ->
-        application.resources.getString(R.string.novice_buy_single_button)
-            .format(WidgetHelpers.formatNumbers(worker.cost))
-    }
     val masterBuySingleButtonEnabled = Transformations.map(mastersLive) { worker ->
         worker.cost < _widget.count
     }
-    val masterBuySetButtonText = Transformations.map(mastersLive) { worker ->
-        application.resources.getString(R.string.novice_buy_set_button)
-            .format(worker.countToSet(), WidgetHelpers.formatNumbers(worker.priceToSet()))
-    }
-    val masterTotalSpeedString = Transformations.map(mastersLive) { worker ->
-        totalSpeedString(worker)
+    val masterBuySetButtonEnabled = Transformations.map(mastersLive) { worker ->
+        worker.priceToSet() < _widget.count
     }
 
-    val adeptCountString = Transformations.map(adeptsLive) { worker ->
-        WidgetHelpers.formatNumbers(worker.count)
-    }
-    val adeptCount = Transformations.map(adeptsLive) { worker ->
-        worker.count
-    }
-    val adeptBuySingleButtonText = Transformations.map(adeptsLive) { worker ->
-        application.resources.getString(R.string.novice_buy_single_button)
-            .format(WidgetHelpers.formatNumbers(worker.cost))
-    }
     val adeptBuySingleButtonEnabled = Transformations.map(adeptsLive) { worker ->
         worker.cost < _widget.count
     }
-    val adeptBuySetButtonText = Transformations.map(adeptsLive) { worker ->
-        application.resources.getString(R.string.novice_buy_set_button)
-            .format(worker.countToSet(), WidgetHelpers.formatNumbers(worker.priceToSet()))
-    }
-    val adeptTotalSpeedString = Transformations.map(adeptsLive) { worker ->
-        totalSpeedString(worker)
+    val adeptBuySetButtonEnabled = Transformations.map(adeptsLive) { worker ->
+        worker.priceToSet() < _widget.count
     }
 
-    fun totalSpeedString(worker: Worker): String {
-        return WidgetHelpers.formatNumbers(worker.totalSpeed()) + "/s"
-    }
-
-    val widgetCount = Transformations.map(widgetsLive) { widget -> widget.count }
     val widgetCountString =
         Transformations.map(widgetsLive) { widget -> WidgetHelpers.formatNumbers(widget.count) }
 
@@ -326,77 +124,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         workerRepository.initializeDB()
     }
 
-    fun updateWorkers(workers: List<Worker>) {
-        for (worker in workers) {
-            when (worker.type) {
-                "novice" -> novices = worker
-                "amateur" -> amateurs = worker
-                "apprentice" -> apprentices = worker
-                "journeyman" -> journeymen = worker
-                "master" -> masters = worker
-                "adept" -> adepts = worker
-            }
-        }
-    }
-
-    fun updateWidgets(widget: Widget) {
-        widgets = widget
-    }
-
-    fun purchaseAmateurs(count: Int) {
-        val worker = amateurs
-        if (purchaseWorkers(worker, count)) {
-            // Assign to cause set.
-            amateurs = worker
-        }
-    }
-
-    fun purchaseNovices(count: Int) {
-        val worker = novices
-        if (purchaseWorkers(worker, count)) {
-            novices = worker
-        }
-    }
-
-    fun purchaseApprentices(count: Int) {
-        val worker = apprentices
-        if (purchaseWorkers(worker, count)) {
-            apprentices = worker
-        }
-    }
-
-    fun purchaseMasters(count: Int) {
-        val worker = masters
-        if (purchaseWorkers(worker, count)) {
-            masters = worker
-        }
-    }
-
-    fun purchaseJourneymen(count: Int) {
-        val worker = journeymen
-        if (purchaseWorkers(worker, count)) {
-            journeymen = worker
-        }
-    }
-
-    fun purchaseAdepts(count: Int) {
-        val worker = adepts
-        if (purchaseWorkers(worker, count)) {
-            adepts = worker
-        }
-    }
-
-    fun purchaseWorkers(worker: Worker, count: Int): Boolean {
-        val cost = worker.priceToCount(count)
-        if (cost < widgets.count) {
-            val widgetCopy = widgets
-            widgetCopy.count -= cost
-            worker.purchase(count)
-            widgets = widgetCopy
-            return true
-        }
-        return false
-    }
 
     private val widgetCountSavedInstanceKey = "widgetCount"
     private val amateurCountSavedInstanceKey = "amateurCount"
@@ -427,120 +154,83 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
                 if (this > 0) setWidgetCount(this)
             }
 
-            with(savedInstanceState.getDouble(amateurCountSavedInstanceKey)) {
-                if (this > 0) setAmateursCount(this)
-            }
-            with(savedInstanceState.getDouble(amateurCostSavedInstanceKey)) {
-                if (this > 0) setAmateursCost(this)
-            }
-            with(savedInstanceState.getInt(amateurPurchasedCountSavedInstanceKey)) {
-                if (this > 0) setAmateursPurchasedCount(this)
-            }
+            amateurManager.loadState(savedInstanceState.getDouble(amateurCountSavedInstanceKey),
+                savedInstanceState.getDouble(amateurCostSavedInstanceKey),
+                savedInstanceState.getInt(amateurPurchasedCountSavedInstanceKey)
+            )
 
-            with(savedInstanceState.getDouble(noviceCountSavedInstanceKey)) {
-                if (this > 0) setNoviceCount(this)
-            }
-            with(savedInstanceState.getDouble(noviceCostSavedInstanceKey)) {
-                if (this > 0) setNovicesCost(this)
-            }
-            with(savedInstanceState.getInt(novicePurchasedCountSavedInstanceKey)) {
-                if (this > 0) setNovicesPurchasedCount(this)
-            }
+            noviceManager.loadState(savedInstanceState.getDouble(noviceCountSavedInstanceKey),
+                savedInstanceState.getDouble(noviceCostSavedInstanceKey),
+                savedInstanceState.getInt(novicePurchasedCountSavedInstanceKey)
+            )
 
-            with(savedInstanceState.getDouble(apprenticeCountSavedInstanceKey)) {
-                if (this > 0) setApprenticesCount(this)
-            }
-            with(savedInstanceState.getDouble(apprenticeCostSavedInstanceKey)) {
-                if (this > 0) setApprenticesCost(this)
-            }
-            with(savedInstanceState.getInt(apprenticePurchasedCountSavedInstanceKey)) {
-                if (this > 0) setApprenticesPurchasedCount(this)
-            }
+            apprenticeManager.loadState(savedInstanceState.getDouble(apprenticeCountSavedInstanceKey),
+                savedInstanceState.getDouble(apprenticeCostSavedInstanceKey),
+                savedInstanceState.getInt(apprenticePurchasedCountSavedInstanceKey)
+            )
 
-            with(savedInstanceState.getDouble(journeymenCountSavedInstanceKey)) {
-                if (this > 0) setJourneymenCount(this)
-            }
-            with(savedInstanceState.getDouble(journeymenCostSavedInstanceKey)) {
-                if (this > 0) setJourneymenCost(this)
-            }
-            with(savedInstanceState.getInt(journeymenPurchasedCountSavedInstanceKey)) {
-                if (this > 0) setJourneymenPurchasedCount(this)
-            }
+            journeymanManager.loadState(savedInstanceState.getDouble(journeymenCountSavedInstanceKey),
+                savedInstanceState.getDouble(journeymenCostSavedInstanceKey),
+                savedInstanceState.getInt(journeymenPurchasedCountSavedInstanceKey)
+            )
 
-            with(savedInstanceState.getDouble(masterCountSavedInstanceKey)) {
-                if (this > 0) setMastersCount(this)
-            }
-            with(savedInstanceState.getDouble(masterCostSavedInstanceKey)) {
-                if (this > 0) setMastersCost(this)
-            }
-            with(savedInstanceState.getInt(masterPurchasedCountSavedInstanceKey)) {
-                if (this > 0) setMastersPurchasedCount(this)
-            }
+            masterManager.loadState(savedInstanceState.getDouble(masterCountSavedInstanceKey),
+                savedInstanceState.getDouble(masterCostSavedInstanceKey),
+                savedInstanceState.getInt(masterPurchasedCountSavedInstanceKey)
+            )
 
-            with(savedInstanceState.getDouble(adeptCountSavedInstanceKey)) {
-                if (this > 0) setAdeptsCount(this)
-            }
-            with(savedInstanceState.getDouble(adeptCostSavedInstanceKey)) {
-                if (this > 0) setAdeptsCost(this)
-            }
-            with(savedInstanceState.getInt(adeptPurchasedCountSavedInstanceKey)) {
-                if (this > 0) setAdeptsPurchasedCount(this)
-            }
+            adeptManager.loadState(savedInstanceState.getDouble(adeptCountSavedInstanceKey),
+                savedInstanceState.getDouble(adeptCostSavedInstanceKey),
+                savedInstanceState.getInt(adeptPurchasedCountSavedInstanceKey)
+            )
+
         }
     }
 
     fun onSaveInstanceState(outState: Bundle) {
         // Save counts
         outState.putDouble(widgetCountSavedInstanceKey, widgets.count)
-        outState.putDouble(amateurCountSavedInstanceKey, amateurs.count)
-        outState.putDouble(apprenticeCountSavedInstanceKey, apprentices.count)
-        outState.putDouble(noviceCountSavedInstanceKey, novices.count)
-        outState.putDouble(masterCountSavedInstanceKey, masters.count)
-        outState.putDouble(journeymenCountSavedInstanceKey, journeymen.count)
-        outState.putDouble(adeptCountSavedInstanceKey, adepts.count)
+
+        outState.putDouble(amateurCountSavedInstanceKey, amateurManager.count)
+        outState.putDouble(apprenticeCountSavedInstanceKey, apprenticeManager.count)
+        outState.putDouble(noviceCountSavedInstanceKey, noviceManager.count)
+        outState.putDouble(masterCountSavedInstanceKey, masterManager.count)
+        outState.putDouble(journeymenCountSavedInstanceKey, journeymanManager.count)
+        outState.putDouble(adeptCountSavedInstanceKey, adeptManager.count)
         // Save Costs
-        outState.putDouble(amateurCostSavedInstanceKey, amateurs.cost)
-        outState.putDouble(apprenticeCostSavedInstanceKey, apprentices.cost)
-        outState.putDouble(noviceCostSavedInstanceKey, novices.cost)
-        outState.putDouble(masterCostSavedInstanceKey, masters.cost)
-        outState.putDouble(journeymenCostSavedInstanceKey, journeymen.cost)
-        outState.putDouble(adeptCostSavedInstanceKey, adepts.cost)
+        outState.putDouble(amateurCostSavedInstanceKey, amateurManager.cost)
+        outState.putDouble(apprenticeCostSavedInstanceKey, apprenticeManager.cost)
+        outState.putDouble(noviceCostSavedInstanceKey, noviceManager.cost)
+        outState.putDouble(masterCostSavedInstanceKey, masterManager.cost)
+        outState.putDouble(journeymenCostSavedInstanceKey, journeymanManager.cost)
+        outState.putDouble(adeptCostSavedInstanceKey, adeptManager.cost)
         // Save purchased counts
-        outState.putInt(amateurPurchasedCountSavedInstanceKey, amateurs.purchased)
-        outState.putInt(apprenticePurchasedCountSavedInstanceKey, apprentices.purchased)
-        outState.putInt(novicePurchasedCountSavedInstanceKey, novices.purchased)
-        outState.putInt(masterPurchasedCountSavedInstanceKey, masters.purchased)
-        outState.putInt(journeymenPurchasedCountSavedInstanceKey, journeymen.purchased)
-        outState.putInt(adeptPurchasedCountSavedInstanceKey, adepts.purchased)
+        outState.putInt(amateurPurchasedCountSavedInstanceKey, amateurManager.purchasedCount)
+        outState.putInt(apprenticePurchasedCountSavedInstanceKey, apprenticeManager.purchasedCount)
+        outState.putInt(novicePurchasedCountSavedInstanceKey, noviceManager.purchasedCount)
+        outState.putInt(masterPurchasedCountSavedInstanceKey, masterManager.purchasedCount)
+        outState.putInt(journeymenPurchasedCountSavedInstanceKey, journeymanManager.purchasedCount)
+        outState.putInt(adeptPurchasedCountSavedInstanceKey, adeptManager.purchasedCount)
     }
 
     @ExperimentalTime
     fun produce() {
         widgets = addProducedWidgets(
             widgets,
-            amateurs.produce(lastRun.Since.inMilliseconds)
+            amateurManager.produce(lastRun.Since.inMilliseconds)
         )
-        amateurs = addProducedWorker(
-            amateurs,
-            novices.produce(lastRun.Since.inMilliseconds)
-        )
-        novices = addProducedWorker(
-            novices,
-            apprentices.produce(lastRun.Since.inMilliseconds)
-        )
-        apprentices = addProducedWorker(
-            apprentices,
-            journeymen.produce(lastRun.Since.inMilliseconds)
-        )
-        journeymen = addProducedWorker(
-            journeymen,
-            masters.produce(lastRun.Since.inMilliseconds)
-        )
-        masters = addProducedWorker(
-            masters,
-            adepts.produce(lastRun.Since.inMilliseconds)
-        )
-        adepts = addProducedWorker(adepts, 0.0)
+        amateurManager.count += noviceManager.produce(lastRun.Since.inMilliseconds)
+
+        noviceManager.count += apprenticeManager.produce(lastRun.Since.inMilliseconds)
+
+        apprenticeManager.count += journeymanManager.produce(lastRun.Since.inMilliseconds)
+
+        journeymanManager.count += masterManager.produce(lastRun.Since.inMilliseconds)
+
+        masterManager.count += adeptManager.produce(lastRun.Since.inMilliseconds)
+
+        // ping this count so it updates the livedata and button enabled
+        adeptManager.count += 0.0
 
         lastRun = System.currentTimeMillis().milliseconds
     }
@@ -550,9 +240,11 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         return produced
     }
 
-    private fun addProducedWorker(worker: Worker, count: Double): Worker {
-        worker.count += count
-        return worker
+    private fun purchaseWorker(worker:WorkerManager, count: Int){
+        val cost = worker.priceToCount(count)
+        if (cost <= _widget.count && worker.purchase(count)) {
+            setWidgetCount(_widget.count - cost)
+        }
     }
 
     val clickListener = View.OnClickListener { view ->
@@ -560,56 +252,44 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         when (view.getId()) {
             R.id.widgetProduceButton -> produceWidget()
             R.id.amateurBuySet -> {
-                purchaseAmateurs(amateurs.countToSet())
+                purchaseWorker(amateurManager, amateurManager.countToSet)
             }
             R.id.amateurBuySingle -> {
-                purchaseAmateurs(1)
+                purchaseWorker(amateurManager, 1)
             }
             R.id.noviceBuySingle -> {
-                purchaseNovices(1)
+                purchaseWorker(noviceManager, 1)
             }
             R.id.noviceBuySet -> {
-                purchaseNovices(novices.countToSet())
+                purchaseWorker(noviceManager, noviceManager.countToSet)
             }
             R.id.apprenticeBuySingle -> {
-                purchaseApprentices(1)
+                purchaseWorker(apprenticeManager, 1)
             }
             R.id.apprenticeBuySet -> {
-                purchaseApprentices(apprentices.countToSet())
+                purchaseWorker(apprenticeManager, apprenticeManager.countToSet)
             }
-            R.id.journeymanBuySingle -> purchaseJourneymen(1)
-            R.id.journeymanBuySet -> purchaseJourneymen(journeymen.countToSet())
+            R.id.journeymanBuySingle -> purchaseWorker(journeymanManager, 1)
+            R.id.journeymanBuySet -> purchaseWorker(journeymanManager, journeymanManager.countToSet)
             R.id.masterBuySingle -> {
-                purchaseMasters(1)
+                purchaseWorker(masterManager, 1)
             }
             R.id.masterBuySet -> {
-                purchaseMasters(masters.countToSet())
+                purchaseWorker(masterManager, masterManager.countToSet)
             }
-            R.id.adeptBuySingle -> purchaseAdepts(1)
-            R.id.adeptBuySet -> purchaseAdepts(adepts.countToSet())
+            R.id.adeptBuySingle -> purchaseWorker(adeptManager, 1)
+            R.id.adeptBuySet -> purchaseWorker(adeptManager, adeptManager.countToSet)
             R.id.resetButton -> resetAll()
         }
     }
 
     private fun resetAll() {
-        novices = resetWorker(_novices)
-        amateurs = resetWorker(_amateurs)
-        apprentices = resetWorker(_apprentices)
-        journeymen = resetWorker(_journeymen)
-        masters = resetWorker(_masters)
-        adepts = resetWorker(_adepts)
+        WorkerManager.resetWorkers(workerRepository)
         setWidgetCount(0.0)
-    }
-
-    private fun resetWorker(worker: Worker): Worker {
-        val resetWorker = workerRepository.defaultValues[worker.type]
-            ?: error("worker type $worker.type not found")
-        resetWorker.workerId = worker.workerId
-        return resetWorker
     }
 
     fun saveAll() {
         widgetRepository.insert(_widget)
-        workerRepository.insertAll(listOf(_novices, _amateurs, _apprentices, _journeymen, _masters))
+        WorkerManager.saveAll(workerRepository)
     }
 }
