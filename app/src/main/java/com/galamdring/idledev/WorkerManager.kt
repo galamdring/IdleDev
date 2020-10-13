@@ -79,7 +79,6 @@ class WorkerManager(private var worker: Worker) {
         if (stateCount > 0) count = stateCount
         if (stateCost > 0) cost = stateCost
         if (statePurchasedCount > 0) purchasedCount = statePurchasedCount
-
     }
 
     companion object Factory {
@@ -100,8 +99,6 @@ class WorkerManager(private var worker: Worker) {
 
         const val AdeptString = "adept"
         private lateinit var adept: WorkerManager
-
-
 
         fun getWorker(type: String, workerRepository: WorkerRepository): WorkerManager {
             var worker = WorkerManager(workerRepository.defaultAmateur)
@@ -128,7 +125,7 @@ class WorkerManager(private var worker: Worker) {
             return worker
         }
 
-        private fun getNovice(workerRepository: WorkerRepository): WorkerManager{
+        private fun getNovice(workerRepository: WorkerRepository): WorkerManager {
             if (!this::novice.isInitialized) {
                 novice = WorkerManager(workerRepository.novices ?: workerRepository.defaultNovice)
             }

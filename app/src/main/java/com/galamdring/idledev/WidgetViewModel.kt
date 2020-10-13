@@ -12,6 +12,7 @@ import com.galamdring.idledev.database.Widget
 import com.galamdring.idledev.database.WidgetRepository
 import com.galamdring.idledev.database.Worker
 import com.galamdring.idledev.database.WorkerRepository
+import com.galamdring.idledev.extensions.Since
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
@@ -124,7 +125,6 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         workerRepository.initializeDB()
     }
 
-
     private val widgetCountSavedInstanceKey = "widgetCount"
     private val amateurCountSavedInstanceKey = "amateurCount"
     private val apprenticeCountSavedInstanceKey = "apprenticeCount"
@@ -154,36 +154,41 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
                 if (this > 0) setWidgetCount(this)
             }
 
-            amateurManager.loadState(savedInstanceState.getDouble(amateurCountSavedInstanceKey),
+            amateurManager.loadState(
+                savedInstanceState.getDouble(amateurCountSavedInstanceKey),
                 savedInstanceState.getDouble(amateurCostSavedInstanceKey),
                 savedInstanceState.getInt(amateurPurchasedCountSavedInstanceKey)
             )
 
-            noviceManager.loadState(savedInstanceState.getDouble(noviceCountSavedInstanceKey),
+            noviceManager.loadState(
+                savedInstanceState.getDouble(noviceCountSavedInstanceKey),
                 savedInstanceState.getDouble(noviceCostSavedInstanceKey),
                 savedInstanceState.getInt(novicePurchasedCountSavedInstanceKey)
             )
 
-            apprenticeManager.loadState(savedInstanceState.getDouble(apprenticeCountSavedInstanceKey),
+            apprenticeManager.loadState(
+                savedInstanceState.getDouble(apprenticeCountSavedInstanceKey),
                 savedInstanceState.getDouble(apprenticeCostSavedInstanceKey),
                 savedInstanceState.getInt(apprenticePurchasedCountSavedInstanceKey)
             )
 
-            journeymanManager.loadState(savedInstanceState.getDouble(journeymenCountSavedInstanceKey),
+            journeymanManager.loadState(
+                savedInstanceState.getDouble(journeymenCountSavedInstanceKey),
                 savedInstanceState.getDouble(journeymenCostSavedInstanceKey),
                 savedInstanceState.getInt(journeymenPurchasedCountSavedInstanceKey)
             )
 
-            masterManager.loadState(savedInstanceState.getDouble(masterCountSavedInstanceKey),
+            masterManager.loadState(
+                savedInstanceState.getDouble(masterCountSavedInstanceKey),
                 savedInstanceState.getDouble(masterCostSavedInstanceKey),
                 savedInstanceState.getInt(masterPurchasedCountSavedInstanceKey)
             )
 
-            adeptManager.loadState(savedInstanceState.getDouble(adeptCountSavedInstanceKey),
+            adeptManager.loadState(
+                savedInstanceState.getDouble(adeptCountSavedInstanceKey),
                 savedInstanceState.getDouble(adeptCostSavedInstanceKey),
                 savedInstanceState.getInt(adeptPurchasedCountSavedInstanceKey)
             )
-
         }
     }
 
@@ -240,7 +245,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
         return produced
     }
 
-    private fun purchaseWorker(worker:WorkerManager, count: Int){
+    private fun purchaseWorker(worker: WorkerManager, count: Int) {
         val cost = worker.priceToCount(count)
         if (cost <= _widget.count && worker.purchase(count)) {
             setWidgetCount(_widget.count - cost)
