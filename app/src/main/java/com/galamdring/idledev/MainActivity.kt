@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Start the purchaser loop
-        GlobalScope.launch { Purchaser.listenForPurchases() }
+        val queueSize = 5
+        GlobalScope.launch { Purchaser.listenForPurchases(queueSize) }
 
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(this)
