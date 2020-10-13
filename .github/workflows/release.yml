@@ -1,7 +1,7 @@
 on:
-  create:
-    tags:
-      - 'v*'
+  push:
+    branches:
+      - /ref/tags/v*
 name: Handle Release
 jobs:
   generate:
