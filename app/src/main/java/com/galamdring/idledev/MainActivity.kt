@@ -25,13 +25,14 @@ class MainActivity : AppCompatActivity() {
 
     private var titles = arrayOf("Widgets", "Dodads")
 
+    private val purchaserQueueSize = 5
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // Start the purchaser loop
-        val queueSize = 5
-        GlobalScope.launch { Purchaser.listenForPurchases(queueSize) }
+        GlobalScope.launch { Purchaser.listenForPurchases(purchaserQueueSize) }
 
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(this)
