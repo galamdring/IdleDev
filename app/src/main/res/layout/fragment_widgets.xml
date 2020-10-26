@@ -526,12 +526,37 @@
                 app:layout_constraintTop_toTopOf="@+id/adeptBuySingle"
                 app:layout_constraintVertical_bias="1.0" />
 
-
-
-
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/reset"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/adeptLabel" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <include layout="@layout/reset_button"/>
-        <include layout="@layout/banner_ad" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/adLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!--<com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">"ca-app-pub-9704581944780102/5465412697"
+            </com.google.android.gms.ads.AdView>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </layout>
