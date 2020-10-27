@@ -12,11 +12,4 @@ data class Widget(
     var count: Double
 ) {
 
-    fun purchase(count: Double): Boolean {
-        if (this.count >= count) {
-            this.count -= count
-            return true
-        }
-        return false
-    }
 }

@@ -4,13 +4,9 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.runBlocking
 
-class WidgetRepository(private val application: Application) {
+class WidgetRepository(application: Application) {
     val defaultWidget = Widget(0, 0.0)
     private val widgetDao = WorkerDatabase.getInstance(application).widgetDao
-
-    fun setCount(double: Double) {
-        widgets.value?.let { it.count = double }
-    }
 
     val widget: Widget
         get() = runBlocking { widgetDao.getWidget() ?: defaultWidget }

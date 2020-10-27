@@ -3,9 +3,11 @@ package com.galamdring.idledev
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -73,6 +75,13 @@ class WidgetsFragment : Fragment() {
         return binding.root
     }
 
+    // The floating action button was clicked, buy what we can.
+    fun buyAll() {
+        if (this::workerViewModel.isInitialized) {
+            workerViewModel.buyAll()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         widgetsMan = WidgetsManager(workerViewModel)
@@ -92,6 +101,9 @@ class WidgetsFragment : Fragment() {
 
         if (AppConfig.PRODUCT_FLAVOR == "free") {
             val adView = AdView(context)
+            val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL
+            adView.layoutParams = layoutParams
             adView.adSize = AdSize.BANNER
             adView.adUnitId = DebugConfig.adMobId
             adLayout.addView(adView)
@@ -110,13 +122,11 @@ class WidgetsFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment Widgets.
          */
 
         private val mainHandler = Handler(Looper.getMainLooper())
-        const val stateSaverDelay = 10000.toLong()
+        const val stateSaverDelay = 1000000.toLong()
         const val widgetProductionDelay = 500.toLong()
 
         @JvmStatic

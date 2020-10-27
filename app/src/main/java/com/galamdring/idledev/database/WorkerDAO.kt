@@ -37,4 +37,21 @@ interface WorkerDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(workers: List<Worker>)
+
+    @Query("update workers set name= :name, type = :type, speed = :speed, count= :count, " +
+            "purchased= :purchased, setBonus= :setBonus, setSize= :setSize, cost = :cost, " +
+            "costIncrease = :costIncrease, interval= :interval" +
+            " where type like :type")
+    suspend fun insertWorker(
+        name: String,
+        type: String,
+        speed: Double,
+        count: Double,
+        purchased: Int,
+        setBonus: Double,
+        setSize: Int,
+        cost: Double,
+        costIncrease: Double,
+        interval: Int
+    )
 }
