@@ -57,11 +57,8 @@ class WorkerDatabaseTest {
             1000
         )
         runBlocking { workerDao.insert(novice) }
-        val workers = workerDao.getAllWorkers()
-        val workersData = workers.value
         val worker = runBlocking { workerDao.getWorker("novice") }
-        val workerData = worker
-        assertNotNull(workerData)
-        assertEquals("novice", workerData?.type)
+        assertNotNull(worker)
+        assertEquals("novice", worker?.type)
     }
 }

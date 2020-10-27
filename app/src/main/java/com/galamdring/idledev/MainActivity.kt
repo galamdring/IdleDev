@@ -1,15 +1,17 @@
 package com.galamdring.idledev
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * The number of pages (wizard steps) to show in this demo.
@@ -18,14 +20,18 @@ private const val NUM_PAGES = 2
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
 
     private var titles = arrayOf("Widgets", "Dodads")
 
+    private val purchaserQueueSize = 5
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Start the purchaser loop
+        GlobalScope.launch { Purchaser.listenForPurchases(purchaserQueueSize) }
 
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(this)
@@ -41,6 +47,11 @@ class MainActivity : AppCompatActivity() {
          * and next wizard steps.
          */
         MobileAds.initialize(this) {}
+        fab.setOnTouchListener(RepeatListener(100, 100, View.OnClickListener { maxButtonOnClick() }))
+    }
+
+    fun maxButtonOnClick() {
+        widgetsFragment.buyAll()
     }
 
     override fun onBackPressed() {
@@ -54,6 +65,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    val widgetsFragment = WidgetsFragment.newInstance()
+    val dodadsFragment = DodadsFragment.newInstance()
+
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
@@ -63,8 +77,8 @@ class MainActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> WidgetsFragment()
-                1 -> DodadsFragment()
+                0 -> widgetsFragment
+                1 -> dodadsFragment
                 else -> Fragment()
             }
         }

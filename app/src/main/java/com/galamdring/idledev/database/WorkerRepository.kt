@@ -7,7 +7,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class WorkerRepository(private val application: Application) {
+class WorkerRepository(application: Application) {
     companion object {
         private var INSTANCE: WorkerRepository? = null
 
@@ -101,7 +101,14 @@ class WorkerRepository(private val application: Application) {
     }
 
     fun insertAll(workers: List<Worker>) {
-        GlobalScope.launch { workerDao.insertAll(workers) }
+        GlobalScope.launch {
+            for (worker in workers) {
+                workerDao.insertWorker(
+                    worker.name, worker.type, worker.speed, worker.count, worker.purchased,
+                    worker.setBonus, worker.setSize, worker.cost, worker.costIncrease,
+                    worker.interval)
+            }
+        }
     }
 
     fun hasType(type: String): Boolean = runBlocking {

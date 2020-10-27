@@ -10,7 +10,7 @@ class WorkerManager(private var worker: Worker) {
     private val workerBuySingleButtonFormatString = "Buy 1\n%s"
     private val workerBuySetButtonFormatString = "Buy %d\n%s"
 
-    val workerLive = MutableLiveData<Worker>(worker)
+    val workerLive = MutableLiveData(worker)
 
     var count: Double
         get() = worker.count
@@ -31,7 +31,7 @@ class WorkerManager(private var worker: Worker) {
 
     var cost: Double
         get() = worker.cost
-        set(cost: Double) {
+        set(cost) {
             worker.cost = cost
             workerLive.postValue(worker)
         }
@@ -188,7 +188,8 @@ class WorkerManager(private var worker: Worker) {
                     amateur.worker,
                     apprentice.worker,
                     journeyman.worker,
-                    master.worker
+                    master.worker,
+                    adept.worker
                 )
             )
         }
@@ -205,7 +206,7 @@ class WorkerManager(private var worker: Worker) {
         }
 
         fun resetWorkers(repository: WorkerRepository) {
-            amateur.setWorker(repository.defaultAmateur)
+            amateur.setWorker(repository.getWorker("amateur"))
             novice.setWorker(repository.defaultNovice)
             apprentice.setWorker(repository.defaultApprentice)
             journeyman.setWorker(repository.defaultJourneyman)
