@@ -101,7 +101,9 @@ class WidgetsFragment : Fragment() {
 
         if (AppConfig.PRODUCT_FLAVOR == "free") {
             val adView = AdView(context)
-            val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT)
             layoutParams.gravity = Gravity.CENTER_HORIZONTAL
             adView.layoutParams = layoutParams
             adView.adSize = AdSize.BANNER

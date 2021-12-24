@@ -41,40 +41,48 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
             widgetsLive.postValue(value)
         }
     var widgetsLive = MutableLiveData(_widget)
+
     private fun setWidgetCount(count: Double) {
         _widget.count = count
         widgetsLive.postValue(_widget)
     }
 
     var noviceManager = WorkerManager.getWorker(WorkerManager.NoviceString, workerRepository)
+    
     val novicesLive: MutableLiveData<Worker>
         get() = noviceManager.workerLive
 
     var apprenticeManager =
         WorkerManager.getWorker(WorkerManager.ApprenticeString, workerRepository)
+
     val apprenticesLive: MutableLiveData<Worker>
         get() = apprenticeManager.workerLive
 
     var amateurManager = WorkerManager.getWorker(WorkerManager.AmateurString, workerRepository)
+
     val amateursLive: MutableLiveData<Worker>
         get() = amateurManager.workerLive
 
     var journeymanManager =
         WorkerManager.getWorker(WorkerManager.JourneymanString, workerRepository)
+
     val journeymenLive: MutableLiveData<Worker>
         get() = journeymanManager.workerLive
 
     var masterManager = WorkerManager.getWorker(WorkerManager.MasterString, workerRepository)
+
     val mastersLive: MutableLiveData<Worker>
         get() = masterManager.workerLive
 
     var adeptManager = WorkerManager.getWorker(WorkerManager.AdeptString, workerRepository)
+
     val adeptsLive: MutableLiveData<Worker>
         get() = adeptManager.workerLive
 
     val noviceBuySingleButtonEnabled = Transformations.map(novicesLive) { worker ->
         worker.cost < _widget.count
     }
+
     val noviceBuySetButtonEnabled = Transformations.map(novicesLive) { worker ->
         worker.priceToSet() < _widget.count
     }
@@ -82,6 +90,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     val amateurBuySingleButtonEnabled = Transformations.map(amateursLive) { worker ->
         worker.cost < _widget.count
     }
+
     val amateurBuySetButtonEnabled = Transformations.map(amateursLive) { worker ->
         worker.priceToSet() < _widget.count
     }

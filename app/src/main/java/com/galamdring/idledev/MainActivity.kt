@@ -17,6 +17,8 @@ import kotlinx.coroutines.launch
  * The number of pages (wizard steps) to show in this demo.
  */
 private const val NUM_PAGES = 2
+private const val QUEUE_SIZE = 5
+private const val REPEAT_LISTENER_INTERVAL = 100
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private var titles = arrayOf("Widgets", "Dodads")
 
-    private val purchaserQueueSize = 5
+    private val purchaserQueueSize = QUEUE_SIZE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,10 @@ class MainActivity : AppCompatActivity() {
          * and next wizard steps.
          */
         MobileAds.initialize(this) {}
-        fab.setOnTouchListener(RepeatListener(100, 100, View.OnClickListener { maxButtonOnClick() }))
+        fab.setOnTouchListener(RepeatListener(REPEAT_LISTENER_INTERVAL,
+                                              REPEAT_LISTENER_INTERVAL,
+                                              View.OnClickListener {
+                                                maxButtonOnClick() }))
     }
 
     fun maxButtonOnClick() {

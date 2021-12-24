@@ -11,5 +11,60 @@ data class Widget(
     @ColumnInfo(name = "count")
     var count: Double
 ) {
+    fun totalSpeed(): Double {
+        // get the flat speed rate for count
+        var flatSpeed = this.count * this.speed
+        // bonus based on how many set groups have been purchased
+        var bonusCount = this.purchased / this.setSize
+        if (bonusCount == 0) return flatSpeed
+        return flatSpeed * bonusCount * (this.setBonus)
+    }
 
+    fun produce(msSinceUpdate: Double): Double {
+        if (this.count == 0.0) {
+            return 0.0
+        }
+        return (this.totalSpeed() * msSinceUpdate / this.interval)
+    }
+
+    fun countToSet(): Int {
+        return this.setSize - this.purchased % this.setSize
+    }
+
+    fun priceToSet(): Double {
+        return this.priceToCount(this.countToSet())
+    }
+
+    fun purchase(count: Int) {
+        if (count <= 0 || count > this.setSize) {
+            return
+        }
+        this.count += count
+        this.purchased += count
+        if ((this.purchased % setSize) < 1) {
+            // Increase cost for the next one
+            this.cost = increasePrice(count, this.cost, this.costIncrease)
+        }
+    }
+
+    fun increasePrice(numToSet: Int, startingCost: Double, interval: Double): Double {
+        var newPrice = startingCost
+        for (i in 0 until numToSet) {
+            newPrice = newPrice.times(interval)
+        }
+        return newPrice
+    }
+
+    fun purchaseNextSet() {
+        this.purchase(this.countToSet())
+    }
+
+    fun priceToCount(count: Int): Double {
+        var priceToCount = 0.0
+        var currentPrice = this.cost
+        for (i in 0 until count) {
+            priceToCount += currentPrice
+        }
+        return priceToCount
+    }
 }
