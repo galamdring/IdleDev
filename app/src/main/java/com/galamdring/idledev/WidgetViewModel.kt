@@ -2,8 +2,10 @@ package com.galamdring.idledev
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,15 +15,17 @@ import com.galamdring.idledev.database.WidgetRepository
 import com.galamdring.idledev.database.Worker
 import com.galamdring.idledev.database.WorkerRepository
 import com.galamdring.idledev.extensions.Since
+import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
 class WidgetViewModel(application: Application) : AndroidViewModel(application) {
 
+    private var produceNow = true
     private val workerRepository: WorkerRepository = WorkerRepository.getInstance(application)
     private val widgetRepository = WidgetRepository(application)
 
-    val sharedPreferences = application.getSharedPreferences(
+    val sharedPreferences: SharedPreferences = application.getSharedPreferences(
         application.getString(R.string.shared_preferences_key),
         Context.MODE_PRIVATE
     )
@@ -37,40 +41,48 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
             widgetsLive.postValue(value)
         }
     var widgetsLive = MutableLiveData(_widget)
+
     private fun setWidgetCount(count: Double) {
         _widget.count = count
         widgetsLive.postValue(_widget)
     }
 
     var noviceManager = WorkerManager.getWorker(WorkerManager.NoviceString, workerRepository)
+    
     val novicesLive: MutableLiveData<Worker>
         get() = noviceManager.workerLive
 
     var apprenticeManager =
         WorkerManager.getWorker(WorkerManager.ApprenticeString, workerRepository)
+
     val apprenticesLive: MutableLiveData<Worker>
         get() = apprenticeManager.workerLive
 
     var amateurManager = WorkerManager.getWorker(WorkerManager.AmateurString, workerRepository)
+
     val amateursLive: MutableLiveData<Worker>
         get() = amateurManager.workerLive
 
     var journeymanManager =
         WorkerManager.getWorker(WorkerManager.JourneymanString, workerRepository)
+
     val journeymenLive: MutableLiveData<Worker>
         get() = journeymanManager.workerLive
 
     var masterManager = WorkerManager.getWorker(WorkerManager.MasterString, workerRepository)
+
     val mastersLive: MutableLiveData<Worker>
         get() = masterManager.workerLive
 
     var adeptManager = WorkerManager.getWorker(WorkerManager.AdeptString, workerRepository)
+
     val adeptsLive: MutableLiveData<Worker>
         get() = adeptManager.workerLive
 
     val noviceBuySingleButtonEnabled = Transformations.map(novicesLive) { worker ->
         worker.cost < _widget.count
     }
+
     val noviceBuySetButtonEnabled = Transformations.map(novicesLive) { worker ->
         worker.priceToSet() < _widget.count
     }
@@ -78,6 +90,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     val amateurBuySingleButtonEnabled = Transformations.map(amateursLive) { worker ->
         worker.cost < _widget.count
     }
+
     val amateurBuySetButtonEnabled = Transformations.map(amateursLive) { worker ->
         worker.priceToSet() < _widget.count
     }
@@ -220,24 +233,26 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
 
     @ExperimentalTime
     fun produce() {
-        widgets = addProducedWidgets(
-            widgets,
-            amateurManager.produce(lastRun.Since.inMilliseconds)
-        )
-        amateurManager.count += noviceManager.produce(lastRun.Since.inMilliseconds)
+        if (produceNow) {
+            widgets = addProducedWidgets(
+                widgets,
+                amateurManager.produce(lastRun.Since.inMilliseconds)
+            )
+            amateurManager.count += noviceManager.produce(lastRun.Since.inMilliseconds)
 
-        noviceManager.count += apprenticeManager.produce(lastRun.Since.inMilliseconds)
+            noviceManager.count += apprenticeManager.produce(lastRun.Since.inMilliseconds)
 
-        apprenticeManager.count += journeymanManager.produce(lastRun.Since.inMilliseconds)
+            apprenticeManager.count += journeymanManager.produce(lastRun.Since.inMilliseconds)
 
-        journeymanManager.count += masterManager.produce(lastRun.Since.inMilliseconds)
+            journeymanManager.count += masterManager.produce(lastRun.Since.inMilliseconds)
 
-        masterManager.count += adeptManager.produce(lastRun.Since.inMilliseconds)
+            masterManager.count += adeptManager.produce(lastRun.Since.inMilliseconds)
 
-        // ping this count so it updates the livedata and button enabled
-        adeptManager.count += 0.0
+            // ping this count so it updates the livedata and button enabled
+            adeptManager.count += 0.0
 
-        lastRun = System.currentTimeMillis().milliseconds
+            lastRun = System.currentTimeMillis().milliseconds
+        }
     }
 
     private fun addProducedWidgets(produced: Widget, count: Double): Widget {
@@ -246,15 +261,18 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun purchaseWorker(worker: WorkerManager, count: Int) {
+        /*
         val cost = worker.priceToCount(count)
         if (cost <= _widget.count && worker.purchase(count)) {
             setWidgetCount(_widget.count - cost)
         }
+        */
+        runBlocking { Purchaser.purchaseWorker(worker, widgets, count) }
     }
 
     val clickListener = View.OnClickListener { view ->
 
-        when (view.getId()) {
+        when (view.id) {
             R.id.widgetProduceButton -> produceWidget()
             R.id.amateurBuySet -> {
                 purchaseWorker(amateurManager, amateurManager.countToSet)
@@ -284,17 +302,30 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
             }
             R.id.adeptBuySingle -> purchaseWorker(adeptManager, 1)
             R.id.adeptBuySet -> purchaseWorker(adeptManager, adeptManager.countToSet)
-            R.id.resetButton -> resetAll()
+            R.id.resetButton ->
+                resetAll()
         }
     }
 
+    fun buyAll() {
+        purchaseWorker(amateurManager, 1)
+        purchaseWorker(noviceManager, 1)
+        purchaseWorker(apprenticeManager, 1)
+        purchaseWorker(journeymanManager, 1)
+        purchaseWorker(masterManager, 1)
+        purchaseWorker(adeptManager, 1)
+    }
+
     private fun resetAll() {
+        produceNow = false
         WorkerManager.resetWorkers(workerRepository)
         setWidgetCount(0.0)
+        produceNow = true
     }
 
     fun saveAll() {
         widgetRepository.insert(_widget)
+        Toast.makeText(getApplication(), "Game saved.", Toast.LENGTH_SHORT).show()
         WorkerManager.saveAll(workerRepository)
     }
 }

@@ -30,7 +30,7 @@ jobs:
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
       - name: detekt
-        uses: natiginfo/action-detekt-all@1.14.0
+        uses: natiginfo/action-detekt-all@1.19.0
         with:
           args: --config config/detekt.yml
 
