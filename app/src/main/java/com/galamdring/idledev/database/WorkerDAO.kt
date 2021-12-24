@@ -38,11 +38,21 @@ interface WorkerDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(workers: List<Worker>)
 
-    @Query("update workers set name= :worker.name, type = :worker.type, " +
-            "speed = :worker.speed, count= :worker.count, " +
-            "purchased= :worker.purchased, setBonus= :worker.setBonus, " +
-            "setSize= :worker.setSize, cost = :worker.cost, " +
-            "costIncrease = :worker.costIncrease, interval= :worker.interval" +
-            " where type like :worker.type")
-    suspend fun insertWorker(worker: Worker)
+    @Suppress("LongParameterList")
+    @Query("update workers set name= :name, type = :type, speed = :speed, count= :count, " +
+            "purchased= :purchased, setBonus= :setBonus, setSize= :setSize, cost = :cost, " +
+            "costIncrease = :costIncrease, interval= :interval" +
+            " where type like :type")
+    suspend fun insertWorker(
+        name: String,
+        type: String,
+        speed: Double,
+        count: Double,
+        purchased: Int,
+        setBonus: Double,
+        setSize: Int,
+        cost: Double,
+        costIncrease: Double,
+        interval: Int
+    )
 }

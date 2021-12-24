@@ -103,7 +103,10 @@ class WorkerRepository(application: Application) {
     fun insertAll(workers: List<Worker>) {
         GlobalScope.launch {
             for (worker in workers) {
-                workerDao.insertWorker(worker)
+                workerDao.insertWorker(
+                    worker.name, worker.type, worker.speed, worker.count, worker.purchased,
+                    worker.setBonus, worker.setSize, worker.cost, worker.costIncrease,
+                    worker.interval)
             }
         }
     }
