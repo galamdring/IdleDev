@@ -28,11 +28,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: Releasing using Hub
-        uses: galamdring/action-release-debugapk@main
+        uses: ShaunLWM/action-release-debugapk@master
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           APP_FOLDER: app
           RELEASE_TITLE: New Build
+          REPO_BRANCH: main
           VERSION_NAME: ${{ steps.get_tag_name.outputs.VERSION }}
           INCLUDE_DEBUG_FREE: Y
           INCLUDE_DEBUG_PAID: Y
