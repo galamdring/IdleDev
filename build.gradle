@@ -60,3 +60,10 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+        vendor.set(JvmVendorSpec.ADOPTOPENJDK)
+    }
+}
