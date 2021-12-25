@@ -1,5 +1,6 @@
 package com.galamdring.idledev
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -7,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.galamdring.idledev.databinding.ActivityMainBinding
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity() {
 
     private val purchaserQueueSize = QUEUE_SIZE
 
+    private lateinit var binding: ActivityMainBinding
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,13 +39,14 @@ class MainActivity : AppCompatActivity() {
         // Start the purchaser loop
         GlobalScope.launch { Purchaser.listenForPurchases(purchaserQueueSize) }
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(this)
-        pager.adapter = pagerAdapter
+        binding.pager.adapter = pagerAdapter
 
-        TabLayoutMediator(tab_layout, pager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = titles[position]
-            pager.setCurrentItem(tab.position, true)
+            binding.pager.setCurrentItem(tab.position, true)
         }.attach()
 
         /**
@@ -49,10 +54,15 @@ class MainActivity : AppCompatActivity() {
          * and next wizard steps.
          */
         MobileAds.initialize(this) {}
-        fab.setOnTouchListener(RepeatListener(REPEAT_LISTENER_INTERVAL,
-                                              REPEAT_LISTENER_INTERVAL,
-                                              View.OnClickListener {
-                                                maxButtonOnClick() }))
+        binding.fab.setOnTouchListener(
+            RepeatListener(
+                REPEAT_LISTENER_INTERVAL,
+                REPEAT_LISTENER_INTERVAL,
+                View.OnClickListener {
+                    maxButtonOnClick()
+                }
+            )
+        )
     }
 
     fun maxButtonOnClick() {

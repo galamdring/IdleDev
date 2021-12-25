@@ -106,7 +106,8 @@ class WorkerRepository(application: Application) {
                 workerDao.insertWorker(
                     worker.name, worker.type, worker.speed, worker.count, worker.purchased,
                     worker.setBonus, worker.setSize, worker.cost, worker.costIncrease,
-                    worker.interval)
+                    worker.interval
+                )
             }
         }
     }

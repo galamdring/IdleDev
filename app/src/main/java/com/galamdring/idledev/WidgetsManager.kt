@@ -5,7 +5,7 @@ import kotlin.time.ExperimentalTime
 class WidgetsManager(
     private val viewModel: WidgetViewModel,
 ) : Runnable {
-    @ExperimentalTime
+    @OptIn(ExperimentalTime::class)
     override fun run() {
         viewModel.produce()
         WidgetsFragment.postDelayed(this, WidgetsFragment.widgetProductionDelay)
