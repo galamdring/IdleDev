@@ -11,6 +11,4 @@ data class Widget(
     var widgetId: Long = 0L,
     @ColumnInfo(name = "count")
     var count: Double
-) {
-
-}
+)

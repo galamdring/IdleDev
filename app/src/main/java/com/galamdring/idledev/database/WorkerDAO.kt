@@ -39,10 +39,12 @@ interface WorkerDAO {
     suspend fun insertAll(workers: List<Worker>)
 
     @Suppress("LongParameterList")
-    @Query("update workers set name= :name, type = :type, speed = :speed, count= :count, " +
+    @Query(
+        "update workers set name= :name, type = :type, speed = :speed, count= :count, " +
             "purchased= :purchased, setBonus= :setBonus, setSize= :setSize, cost = :cost, " +
             "costIncrease = :costIncrease, interval= :interval" +
-            " where type like :type")
+            " where type like :type"
+    )
     suspend fun insertWorker(
         name: String,
         type: String,

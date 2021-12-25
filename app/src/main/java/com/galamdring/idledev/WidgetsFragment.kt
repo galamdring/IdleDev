@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.galamdring.idledev.database.WidgetRepository
@@ -17,7 +16,6 @@ import com.galamdring.idledev.databinding.FragmentWidgetsBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
-import kotlinx.android.synthetic.main.fragment_widgets.*
 
 /**
  * A simple [Fragment] subclass.
@@ -49,9 +47,10 @@ class WidgetsFragment : Fragment() {
         setupView(savedInstanceState)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var _binding: FragmentWidgetsBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,18 +60,21 @@ class WidgetsFragment : Fragment() {
         workerViewModel = ViewModelProvider(this).get(WidgetViewModel::class.java)
         workerViewModel.initDB()
 
-        val binding: FragmentWidgetsBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_widgets, container, false)
         binding.viewModel = workerViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        workerViewModel.amateursLive.observe(viewLifecycleOwner, {})
-        workerViewModel.novicesLive.observe(viewLifecycleOwner, {})
-        workerViewModel.apprenticesLive.observe(viewLifecycleOwner, {})
-        workerViewModel.mastersLive.observe(viewLifecycleOwner, {})
-        workerViewModel.widgetsLive.observe(viewLifecycleOwner, {})
+        workerViewModel.amateursLive.observe(viewLifecycleOwner) {}
+        workerViewModel.novicesLive.observe(viewLifecycleOwner) {}
+        workerViewModel.apprenticesLive.observe(viewLifecycleOwner) {}
+        workerViewModel.mastersLive.observe(viewLifecycleOwner) {}
+        workerViewModel.widgetsLive.observe(viewLifecycleOwner) {}
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     // The floating action button was clicked, buy what we can.
@@ -82,7 +84,6 @@ class WidgetsFragment : Fragment() {
         }
     }
 
-    @OptIn(ExperimentalTime::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         widgetsMan = WidgetsManager(workerViewModel)
@@ -101,22 +102,23 @@ class WidgetsFragment : Fragment() {
         postDelayed(widgetsMan, widgetProductionDelay)
 
         if (AppConfig.PRODUCT_FLAVOR == "free") {
-            val adView = AdView(context)
+            val adView = AdView(requireContext())
             val layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT)
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
             layoutParams.gravity = Gravity.CENTER_HORIZONTAL
             adView.layoutParams = layoutParams
             adView.adSize = AdSize.BANNER
             adView.adUnitId = DebugConfig.adMobId
-            adLayout.addView(adView)
+            binding.adLayout.addView(adView)
             adView.loadAd(AdRequest.Builder().build())
         }
 
         if (DebugConfig.DEBUG_VERSION) {
-            resetButton.setOnClickListener(workerViewModel.clickListener)
+            binding.resetButton.setOnClickListener(workerViewModel.clickListener)
         } else {
-            resetButton.visibility = View.GONE
+            binding.resetButton.visibility = View.GONE
         }
     }
 
