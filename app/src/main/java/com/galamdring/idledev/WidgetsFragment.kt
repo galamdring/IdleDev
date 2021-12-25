@@ -82,6 +82,7 @@ class WidgetsFragment : Fragment() {
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         widgetsMan = WidgetsManager(workerViewModel)
