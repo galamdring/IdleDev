@@ -48,7 +48,7 @@ class WidgetViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     var noviceManager = WorkerManager.getWorker(WorkerManager.NoviceString, workerRepository)
-    
+
     val novicesLive: MutableLiveData<Worker>
         get() = noviceManager.workerLive
 
