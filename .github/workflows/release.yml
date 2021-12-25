@@ -28,7 +28,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: Releasing using Hub
-        uses: galamdring/action-release-debugapk@master
+        uses: galamdring/action-release-debugapk@main
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           APP_FOLDER: app
